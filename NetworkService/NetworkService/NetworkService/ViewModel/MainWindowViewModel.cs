@@ -1,16 +1,31 @@
-﻿using System;
+﻿using NetworkService.Helpers;
+using NetworkService.Model;
+using Notification.Wpf;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NetworkService.ViewModel
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : BindableBase
     {
+        public MyICommand<string> NavCommand { get; private set; }
+        public MyICommand<Window> CloseWindowCommand { get; private set; }
+        public static ObservableCollection<DERModel> DERs { get; set; }
+
+        public NetworkEntitiesViewModel networkEntitiesViewModel;
+        private BindableBase currentViewModel;
+        private NotificationManager notificationManager;
+
         private int count = 15; // Inicijalna vrednost broja objekata u sistemu
                                 // ######### ZAMENITI stvarnim brojem elemenata
                                 //           zavisno od broja entiteta u listi
@@ -18,7 +33,47 @@ namespace NetworkService.ViewModel
         public MainWindowViewModel()
         {
             createListener(); //Povezivanje sa serverskom aplikacijom
+
+            notificationManager = new NotificationManager();
+            
+            NavCommand = new MyICommand<string>(OnNav);
+            CloseWindowCommand = new MyICommand<Window>(CloseWindow);
+
+            DERs = new ObservableCollection<DERModel>();
+            networkEntitiesViewModel = new NetworkEntitiesViewModel();
+            currentViewModel = networkEntitiesViewModel;
         }
+
+
+        public BindableBase CurrentViewModel
+        {
+            get { return currentViewModel; }
+            set
+            {
+                SetProperty(ref currentViewModel, value);
+            }
+        }
+
+        private void OnNav(string destination)
+        {
+            switch (destination)
+            {
+                case "NetworkEntitesView":
+                    CurrentViewModel = networkEntitiesViewModel;
+                    break;
+            }
+        }
+
+        private void ShowToastNotification(NotificationContent notificationContent)
+        {
+            notificationManager.Show(notificationContent, "WindowNotificationArea");
+        }
+
+        private void CloseWindow(Window MainWindow)
+        {
+            MainWindow.Close();
+        }
+
 
         private void createListener()
         {

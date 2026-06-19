@@ -25,13 +25,20 @@ namespace NetworkService.Model
         public string ImagePath
         {
             get { return imagePath; }
-            set { imagePath = value; }
+            private set { imagePath = value; }
         }
 
-        public DERModelType(DERType name, string imagePath)
+        public DERModelType(DERType name)
         {
-            this.name = name;
-            this.imagePath = imagePath;
+            Name = name;
+            if(Name == DERType.SOLAR_PANEL)
+            {
+                ImagePath = "/Assets/Images/solar_panel.png";
+            }
+            else if(Name == DERType.WIND_TURBINE)
+            {
+                ImagePath = "/Assets/Images/wind_turbine.png";
+            }
         }
     }
 }
