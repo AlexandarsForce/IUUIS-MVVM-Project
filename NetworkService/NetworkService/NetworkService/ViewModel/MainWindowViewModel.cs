@@ -23,6 +23,9 @@ namespace NetworkService.ViewModel
         public static ObservableCollection<DERModel> DERs { get; set; }
 
         public NetworkEntitiesViewModel networkEntitiesViewModel;
+        public NetworkDisplayViewModel networkDisplayViewModel;
+        public MeasurementGraphViewModel measurementGraphViewModel;
+        public AddEntityViewModel addEntityViewModel;
         private BindableBase currentViewModel;
         private NotificationManager notificationManager;
 
@@ -41,6 +44,9 @@ namespace NetworkService.ViewModel
 
             DERs = new ObservableCollection<DERModel>();
             networkEntitiesViewModel = new NetworkEntitiesViewModel();
+            networkDisplayViewModel = new NetworkDisplayViewModel();
+            measurementGraphViewModel = new MeasurementGraphViewModel();
+            addEntityViewModel = new AddEntityViewModel();
             currentViewModel = networkEntitiesViewModel;
         }
 
@@ -58,8 +64,17 @@ namespace NetworkService.ViewModel
         {
             switch (destination)
             {
-                case "NetworkEntitesView":
+                case "NetworkEntites":
                     CurrentViewModel = networkEntitiesViewModel;
+                    break;
+                case "NetworkDisplay":
+                    CurrentViewModel = networkDisplayViewModel;
+                    break;
+                case "MeasurementGraph":
+                    CurrentViewModel = measurementGraphViewModel;
+                    break;
+                case "AddEntity":
+                    CurrentViewModel = addEntityViewModel;
                     break;
             }
         }

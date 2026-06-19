@@ -64,7 +64,7 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Command="{Binding NavCommand}"
-                    CommandParameter="NetworkEntitiesView"
+                    CommandParameter="NetworkEntities"
                     Style="{StaticResource MenuButtonStyle}">
                     <Image 
                         Source="/Assets/Icons/home_icon.png" 
@@ -76,7 +76,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Command="{Binding NavCommand}"
-                    CommandParameter="NetworkDisplayView"
+                    CommandParameter="NetworkDisplay"
                     Style="{StaticResource MenuButtonStyle}">
                     <Image 
                         Source="/Assets/Icons/display_icon.png" 
@@ -88,7 +88,7 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     Command="{Binding NavCommand}"
-                    CommandParameter="MeasurementGraphView"
+                    CommandParameter="MeasurementGraph"
                     Style="{StaticResource MenuButtonStyle}">
                     <Image 
                     Source="/Assets/Icons/graph_icon.png" 
