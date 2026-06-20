@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:NetworkService"
     xmlns:viewModel="clr-namespace:NetworkService.ViewModel"
     xmlns:views="clr-namespace:NetworkService.Views"
+    Name="MainWindowRef"
     Title="MainWindow" 
     Height="800" 
     Width="360"
@@ -18,11 +19,19 @@
     WindowStyle="None"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"
     mc:Ignorable="d">
-
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel />
+    </Window.DataContext>
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:NetworkEntitiesViewModel}">
             <views:NetworkEntitiesView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:NetworkDisplayViewModel}">
+            <views:NetworkDisplayView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:MeasurementGraphViewModel}">
+            <views:MeasurementGraphView />
         </DataTemplate>
     </Window.Resources>
 
@@ -45,6 +54,7 @@
                 Grid.Column="0"
                 Grid.RowSpan="1"
                 Content="{Binding CurrentViewModel}" />
+            
             <Border Background="#333333" CornerRadius="25, 25, 0, 0" Grid.Row="0" Grid.Column="0"/>
             <Border Background="#333333" CornerRadius="0, 0, 25, 25" Grid.Row="2" Grid.Column="0"/>
             <Grid Grid.Row="2" Grid.Column="0">

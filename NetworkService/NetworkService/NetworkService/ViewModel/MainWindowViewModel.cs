@@ -64,7 +64,7 @@ namespace NetworkService.ViewModel
         {
             switch (destination)
             {
-                case "NetworkEntites":
+                case "NetworkEntities":
                     CurrentViewModel = networkEntitiesViewModel;
                     break;
                 case "NetworkDisplay":
