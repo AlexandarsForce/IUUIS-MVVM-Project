@@ -43,6 +43,8 @@ namespace NetworkService.ViewModel
             CloseWindowCommand = new MyICommand<Window>(CloseWindow);
 
             DERs = new ObservableCollection<DERModel>();
+            DERs.Add(new DERModel("Entity_1", new DERModelType(DERType.SOLAR_PANEL), 3));
+            DERs.Add(new DERModel("Entity_2", new DERModelType(DERType.WIND_TURBINE), 5));
             networkEntitiesViewModel = new NetworkEntitiesViewModel();
             networkDisplayViewModel = new NetworkDisplayViewModel();
             measurementGraphViewModel = new MeasurementGraphViewModel();

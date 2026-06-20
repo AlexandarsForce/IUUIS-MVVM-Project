@@ -159,6 +159,9 @@
             <Setter
             Property="BorderThickness"
             Value="0"/>
+            <Setter
+            Property="MinHeight"
+            Value="50"/>
         </Style>
     </Application.Resources>
 </Application>

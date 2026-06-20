@@ -12,7 +12,7 @@ namespace NetworkService.ViewModel
 {
     public class NetworkEntitiesViewModel : BindableBase
     {
-        public ObservableCollection<DERModel> DERs;
+        public ObservableCollection<DERModel> DERs { get; set; }
 
         public NetworkEntitiesViewModel()
         {

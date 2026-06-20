@@ -9,12 +9,13 @@ namespace NetworkService.Model
 {
     public class DERModel : ValidationBase
     {
-        private Guid id;
+        private static int totalId = 0;
+        private int id;
         private string name;
         private DERModelType type;
         private int power;
 
-        public Guid Id
+        public int Id
         {
             get { return id; }
             set
@@ -54,7 +55,15 @@ namespace NetworkService.Model
             }
         }
 
-        public DERModel() { }
+        public DERModel() { Id = ++totalId; }
+
+        public DERModel(string name, DERModelType type, int power)
+        {
+            Id = ++totalId;
+            Name = name;
+            Type = type;
+            Power = power;
+        }
 
         protected override void ValidateSelf()
         {

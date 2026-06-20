@@ -7,10 +7,11 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:NetworkService.Views"
     xmlns:viewModel="clr-namespace:NetworkService.ViewModel"
-    mc:Ignorable="d" 
     d:DesignHeight="640"
     d:DesignWidth="360"
-    Background="Transparent">
+    Background="Transparent"
+    mc:Ignorable="d">
+    
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -39,12 +40,12 @@
         CanUserSortColumns="False"
         BorderBrush="White"
         BorderThickness="0"
-        ItemsSource="{Binding DERs}"
+        ItemsSource="{Binding Path=DERs}"
         RowStyle="{StaticResource DefaultDataGridRowStyle}">
             <DataGrid.Columns>
 
                 <DataGridTemplateColumn 
-                Header="Select" Width="*" 
+                Width="0.5*" 
                 HeaderStyle="{StaticResource DefaultDataGridStyle}"
                 CellStyle="{StaticResource DefaultDataGridCellStyle}">
                     <DataGridTemplateColumn.CellTemplate>
@@ -56,8 +57,8 @@
 
                 <DataGridTextColumn
                 Header="ID"
-                Binding="{Binding iD}"
-                Width="*"
+                Binding="{Binding Id}"
+                Width="0.5*"
                 HeaderStyle="{StaticResource DefaultDataGridStyle}"
                 CellStyle="{StaticResource DefaultDataGridCellStyle}"/>
 
@@ -71,7 +72,7 @@
                 <DataGridTextColumn
                 Header="Type"
                 Binding="{Binding Type.Name}"
-                Width="*"
+                Width="2*"
                 HeaderStyle="{StaticResource DefaultDataGridStyle}"
                 CellStyle="{StaticResource DefaultDataGridCellStyle}"/>
 
