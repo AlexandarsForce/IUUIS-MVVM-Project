@@ -33,6 +33,9 @@
         <DataTemplate DataType="{x:Type viewModel:MeasurementGraphViewModel}">
             <views:MeasurementGraphView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AddEntityViewModel}">
+            <views:AddEntityView />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>

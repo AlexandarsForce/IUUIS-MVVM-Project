@@ -14,6 +14,7 @@ namespace NetworkService.Model
         private string name;
         private DERModelType type;
         private int power;
+        private bool isSelected;
 
         public int Id
         {
@@ -37,6 +38,12 @@ namespace NetworkService.Model
         {
             get { return power; }
             set { power = value; OnPropertyChanged("Power"); }
+        }
+
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set { isSelected = value; OnPropertyChanged("IsSelected"); }
         }
 
         public DERModel() { Id = ++totalId; }

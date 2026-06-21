@@ -13,8 +13,11 @@ namespace NetworkService.ViewModel
     public class NetworkEntitiesViewModel : BindableBase
     {
         private ObservableCollection<DERModel> ders;
-        public List<DERType> FilterTypes { get; set; } = new List<DERType>{ DERType.SOLAR_PANEL, DERType.WIND_TURBINE };
+        public List<DERType> FilterTypes { get; set; } = new List<DERType> { DERType.SOLAR_PANEL, DERType.WIND_TURBINE };
         public MyICommand<string> FilterCommand { get; set; }
+        public MyICommand<string> EntityCommand { get; set; }
+
+
         private string filterIDTextBox = string.Empty;
         private DERType? filterTypeComboBox = null;
         private bool? lessThanRadioButton = false;
@@ -38,18 +41,19 @@ namespace NetworkService.ViewModel
         {
             DERs = ders;
             FilterCommand = new MyICommand<string>(OnFilter);
+            EntityCommand = new MyICommand<string>(OnEntity);
         }
 
-        private void OnFilter(string filterKind)
+        private void OnFilter(string filterOption)
         {
             DERs = MainWindowViewModel.DERs;
-            switch (filterKind)
+            switch (filterOption)
             {
                 case "SearchFilter":
                     ObservableCollection<DERModel> filteredDERs = new ObservableCollection<DERModel>();
                     if (!string.IsNullOrEmpty(FilterIDTextBox))
                     {
-                        if(FilterTypeComboBox != null)
+                        if (FilterTypeComboBox != null)
                         {
                             if (LessThanRadioButton == true)
                             {
@@ -84,9 +88,9 @@ namespace NetworkService.ViewModel
                         }
                         else
                         {
-                            if(LessThanRadioButton == true)
+                            if (LessThanRadioButton == true)
                             {
-                                foreach(var der in DERs)
+                                foreach (var der in DERs)
                                 {
                                     if (der.Id < int.Parse(FilterIDTextBox))
                                     {
@@ -94,9 +98,9 @@ namespace NetworkService.ViewModel
                                     }
                                 }
                             }
-                            else if(EqualToRadioButton == true)
+                            else if (EqualToRadioButton == true)
                             {
-                                foreach(var der in DERs)
+                                foreach (var der in DERs)
                                 {
                                     if (der.Id == int.Parse(FilterIDTextBox))
                                     {
@@ -104,9 +108,9 @@ namespace NetworkService.ViewModel
                                     }
                                 }
                             }
-                            else if(GreaterThanRadioButton == true)
+                            else if (GreaterThanRadioButton == true)
                             {
-                                foreach(var der in DERs)
+                                foreach (var der in DERs)
                                 {
                                     if (der.Id > int.Parse(FilterIDTextBox))
                                     {
@@ -135,6 +139,34 @@ namespace NetworkService.ViewModel
                     LessThanRadioButton = false;
                     EqualToRadioButton = false;
                     GreaterThanRadioButton = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void OnEntity(string entityOption)
+        {
+            switch (entityOption)
+            {
+                case "AddEntity":
+                    break;
+                case "DeleteEntity":
+                    ObservableCollection<DERModel> tempDER = MainWindowViewModel.DERs;
+                    List<DERModel> selectedDERs = new List<DERModel>();
+                    foreach (var der in tempDER)
+                    {
+                        if(der.IsSelected)
+                        {
+                            selectedDERs.Add(der);
+                        }
+                    }
+                    foreach (var der in selectedDERs)
+                    {
+                        DERs.Remove(der);
+                        tempDER.Remove(der);
+                    }
+                    MainWindowViewModel.DERs = tempDER;
                     break;
                 default:
                     break;

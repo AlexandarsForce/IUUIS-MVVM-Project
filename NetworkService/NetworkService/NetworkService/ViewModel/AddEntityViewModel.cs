@@ -9,5 +9,8 @@ namespace NetworkService.ViewModel
 {
     public class AddEntityViewModel : BindableBase
     {
+        public AddEntityViewModel()
+        {
+        }
     }
 }
