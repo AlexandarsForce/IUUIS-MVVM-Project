@@ -18,41 +18,25 @@ namespace NetworkService.Model
         public int Id
         {
             get { return id; }
-            set
-            {
-                id = value;
-                OnPropertyChanged("Id");
-            }
+            set { id = value; OnPropertyChanged("Id"); }
         }
 
         public string Name
         {
             get { return name; }
-            set
-            {
-                name = value;
-                OnPropertyChanged("Name");
-            }
+            set { name = value; OnPropertyChanged("Name"); }
         }
 
         public DERModelType Type
         {
             get { return type; }
-            set
-            {
-                type = value;
-                OnPropertyChanged("Type");
-            }
+            set { type = value; OnPropertyChanged("Type"); }
         }
 
         public int Power
         {
             get { return power; }
-            set
-            {
-                power = value;
-                OnPropertyChanged("Power");
-            }
+            set { power = value; OnPropertyChanged("Power"); }
         }
 
         public DERModel() { Id = ++totalId; }

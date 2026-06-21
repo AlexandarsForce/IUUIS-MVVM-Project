@@ -20,12 +20,130 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.7*"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
+        <Border Background="#A4A4A4" CornerRadius="15" Grid.Row="1" Grid.Column="0" Margin="5"/>
+        
+        <TextBlock
+            Style="{StaticResource DefaultTextBlockStyle}"
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="NETWORK ENTITIES"
+            FontWeight="Bold"
+            FontSize="30"
+            Foreground="Black"/>
+
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0">
+            <StackPanel
+                Orientation="Vertical"
+                Margin="0,5">
+                <RadioButton
+                    HorizontalAlignment="Center"
+                    GroupName="IDOperators"
+                    IsChecked="{Binding LessThanRadioButton, Mode=TwoWay}">
+                </RadioButton>
+                <Label
+                    Style="{StaticResource DefaultLabelStyle}"
+                    HorizontalAlignment="Center"
+                    Content="&lt;"
+                    FontWeight="Bold"
+                    Foreground="Black"/>
+            </StackPanel>
+
+            <StackPanel
+                Orientation="Vertical"
+                Margin="0,5">
+                <RadioButton
+                    HorizontalAlignment="Center"
+                    IsChecked="{Binding EqualToRadioButton, Mode=TwoWay}"
+                    GroupName="IDOperators">
+                </RadioButton>
+                <Label
+                    Style="{StaticResource DefaultLabelStyle}"
+                    HorizontalAlignment="Center"
+                    Content="="
+                    FontWeight="Bold"
+                    Foreground="Black"/>
+            </StackPanel>
+
+            <StackPanel
+                Orientation="Vertical"
+                Margin="0,5">
+                <RadioButton
+                    HorizontalAlignment="Center"
+                    IsChecked="{Binding GreaterThanRadioButton, Mode=TwoWay}"
+                    GroupName="IDOperators">
+                </RadioButton>
+                <Label
+                    Style="{StaticResource DefaultLabelStyle}"
+                    HorizontalAlignment="Center"
+                    Content=">"
+                    FontWeight="Bold"
+                    Foreground="Black"/>
+            </StackPanel>
+
+            <TextBox
+                Style="{StaticResource DefaultTextBoxStyle}"
+                Text="{Binding FilterIDTextBox, Mode=TwoWay}"
+                Width="50"
+                Background="#D9D9D9"
+                Foreground="Black"
+                Margin="0,5"
+                VerticalContentAlignment="Center"
+                FontSize="12"
+                FontWeight="Bold"/>
+
+            <ComboBox
+                Width="120"
+                Margin="5"
+                ItemsSource="{Binding FilterTypes}"
+                SelectedItem="{Binding FilterTypeComboBox, Mode=TwoWay}"
+                FontSize="12"
+                FontFamily="Century Gothic"
+                FontWeight="Bold"
+                VerticalContentAlignment="Center"/>
+
+            <Button
+            Grid.Row="0"
+            Grid.Column="3"
+            Command="{Binding FilterCommand}"
+            CommandParameter="SearchFilter"
+            Style="{StaticResource FilterButtonStyle}"
+            Background="#D9D9D9">
+                <Image 
+                Source="/Assets/Icons/search_icon.png" 
+                Stretch="Uniform"
+                Margin="10,10"/>
+            </Button>
+
+            <Button
+            Grid.Row="0"
+            Grid.Column="3"
+            Command="{Binding FilterCommand}"
+            CommandParameter="ResetFilter"
+            Style="{StaticResource FilterButtonStyle}"
+            Background="#D9D9D9"
+            Margin="5">
+                <Image 
+                Source="/Assets/Icons/x_icon.png" 
+                Stretch="Uniform"
+                Margin="10,10"/>
+            </Button>
+        </StackPanel>
+
         <DataGrid
         x:Name="SongsDataGrid"
-        Grid.Row="1"
+        Grid.Row="2"
         Grid.Column="0"
         Margin="0"
         IsReadOnly="True" 
@@ -40,7 +158,7 @@
         CanUserSortColumns="False"
         BorderBrush="White"
         BorderThickness="0"
-        ItemsSource="{Binding Path=DERs}"
+        ItemsSource="{Binding DERs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         RowStyle="{StaticResource DefaultDataGridRowStyle}">
             <DataGrid.Columns>
 
