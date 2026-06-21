@@ -18,6 +18,7 @@ namespace NetworkService.ViewModel
 {
     public class MainWindowViewModel : BindableBase
     {
+        public static MainWindowViewModel Instance { get; private set; }
         public MyICommand<string> NavCommand { get; private set; }
         public MyICommand<Window> CloseWindowCommand { get; private set; }
         public static ObservableCollection<DERModel> DERs { get; set; }
@@ -37,6 +38,7 @@ namespace NetworkService.ViewModel
         {
             createListener(); //Povezivanje sa serverskom aplikacijom
 
+            Instance = this;
             notificationManager = new NotificationManager();
             
             NavCommand = new MyICommand<string>(OnNav);
@@ -44,12 +46,12 @@ namespace NetworkService.ViewModel
 
             DERs = new ObservableCollection<DERModel>
             {
-                new DERModel("Entity_1", new DERModelType(DERType.SOLAR_PANEL), 3),
-                new DERModel("Entity_2", new DERModelType(DERType.WIND_TURBINE), 5),
-                new DERModel("Entity_3", new DERModelType(DERType.WIND_TURBINE), 4),
-                new DERModel("Entity_4", new DERModelType(DERType.SOLAR_PANEL), 1),
-                new DERModel("Entity_5", new DERModelType(DERType.SOLAR_PANEL), 2),
-                new DERModel("Entity_6", new DERModelType(DERType.WIND_TURBINE), 2),
+                new DERModel("Entity_1", new DERModelType(DERType.SOLAR_PANEL)),
+                new DERModel("Entity_2", new DERModelType(DERType.WIND_TURBINE)),
+                new DERModel("Entity_3", new DERModelType(DERType.WIND_TURBINE)),
+                new DERModel("Entity_4", new DERModelType(DERType.SOLAR_PANEL)),
+                new DERModel("Entity_5", new DERModelType(DERType.SOLAR_PANEL)),
+                new DERModel("Entity_6", new DERModelType(DERType.WIND_TURBINE)),
             };
             networkEntitiesViewModel = new NetworkEntitiesViewModel();
             networkDisplayViewModel = new NetworkDisplayViewModel();

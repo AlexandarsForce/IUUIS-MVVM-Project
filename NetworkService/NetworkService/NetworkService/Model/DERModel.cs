@@ -48,12 +48,11 @@ namespace NetworkService.Model
 
         public DERModel() { Id = ++totalId; }
 
-        public DERModel(string name, DERModelType type, int power)
+        public DERModel(string name, DERModelType type)
         {
             Id = ++totalId;
             Name = name;
             Type = type;
-            Power = power;
         }
 
         protected override void ValidateSelf()

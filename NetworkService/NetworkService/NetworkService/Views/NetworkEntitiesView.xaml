@@ -35,7 +35,7 @@
             VerticalAlignment="Center"
             Text="NETWORK ENTITIES"
             FontWeight="Bold"
-            FontSize="30"
+            FontSize="20"
             Foreground="Black"/>
 
         <StackPanel
@@ -97,12 +97,9 @@
                 Style="{StaticResource DefaultTextBoxStyle}"
                 Text="{Binding FilterIDTextBox, Mode=TwoWay}"
                 Width="50"
-                Background="#D9D9D9"
-                Foreground="Black"
                 Margin="0,5"
                 VerticalContentAlignment="Center"
-                FontSize="12"
-                FontWeight="Bold"/>
+                FontSize="12"/>
 
             <ComboBox
                 Width="120"
@@ -218,7 +215,6 @@
             Command="{Binding EntityCommand}"
             CommandParameter="AddEntity"
             Style="{StaticResource EntityButtonStyle}"
-            Background="#D9D9D9"
             Margin="15">
                 <Image 
                 Source="/Assets/Icons/add_icon.png" 
@@ -232,7 +228,6 @@
             Command="{Binding EntityCommand}"
             CommandParameter="DeleteEntity"
             Style="{StaticResource EntityButtonStyle}"
-            Background="#D9D9D9"
             Margin="15">
                 <Image 
                 Source="/Assets/Icons/delete_icon.png" 

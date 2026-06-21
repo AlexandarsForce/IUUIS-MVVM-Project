@@ -8,8 +8,137 @@
     mc:Ignorable="d" 
     d:DesignHeight="640"
     d:DesignWidth="360"
-    Background="Blue">
+    Background="Transparent">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Style="{StaticResource DefaultTextBlockStyle}"
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="NEW ENTITY"
+            FontWeight="Bold"
+            FontSize="20"
+            Margin="30,0"
+            Foreground="Black"/>
+
+
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border 
+            CornerRadius="15" 
+            Grid.Row="0" 
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="10"
+            BorderBrush="Red"
+            BorderThickness="2"
+            Visibility="{Binding NameErrorBorder}"/>
+
+            <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Content="Entity Name:"
+            Style="{StaticResource DefaultLabelStyle}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="15,0,0,15"/>
+            <TextBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Style="{StaticResource DefaultTextBoxStyle}"
+            Text="{Binding NameTextBox}"
+            Width="200"
+            Height="50"
+            Margin="15,0,15,15"
+            HorizontalAlignment="Right"
+            VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"/>
+            <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            VerticalAlignment="Bottom"
+            Style="{StaticResource ErrorLabelStyle}"
+            Content="Invalid - enter name"
+            HorizontalAlignment="Right"
+            Margin="15"
+            Visibility="{Binding NameErrorLabel}"/>
+
+            <Border 
+            CornerRadius="15" 
+            Grid.Row="1" 
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="10"
+            BorderBrush="Red"
+            BorderThickness="2"
+            Visibility="{Binding TypeErrorBorder}"/>
             
+            <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Content="Entity Type:"
+            Style="{StaticResource DefaultLabelStyle}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="15,0,0,15"/>
+            <ComboBox
+            ItemsSource="{Binding DERTypes}"
+            SelectedItem="{Binding TypeComboBox}"
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="200"
+            Height="50"
+            Margin="15,0,15,15"
+            FontSize="16"
+            FontWeight="Bold"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            HorizontalAlignment="Right"/>
+            <Label
+            Grid.Row="1"
+            Grid.Column="1"
+            VerticalAlignment="Bottom"
+            Style="{StaticResource ErrorLabelStyle}"
+            Content="Invalid - enter type"
+            HorizontalAlignment="Right"
+            Margin="15"
+            Visibility="{Binding TypeErrorLabel}"/>
+
+            <Button
+                Style="{StaticResource EntityButtonStyle}"
+                Command="{Binding AddEntityCommand}"
+                Content="Add"
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="100"
+                Height="50"
+                HorizontalAlignment="Right"
+                Margin="15,0,15,15">
+            </Button>
+            
+        </Grid>
     </Grid>
 </UserControl>

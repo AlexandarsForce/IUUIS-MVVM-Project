@@ -35,6 +35,7 @@ namespace NetworkService.ViewModel
         {
             DERs = new ObservableCollection<DERModel>();
             FilterCommand = new MyICommand<string>(OnFilter);
+            EntityCommand = new MyICommand<string>(OnEntity);
         }
 
         public NetworkEntitiesViewModel(ObservableCollection<DERModel> ders)
@@ -150,6 +151,11 @@ namespace NetworkService.ViewModel
             switch (entityOption)
             {
                 case "AddEntity":
+                    if(MainWindowViewModel.Instance != null)
+                    {
+                        MainWindowViewModel.Instance.addEntityViewModel.ResetFields();
+                        MainWindowViewModel.Instance.CurrentViewModel = MainWindowViewModel.Instance.addEntityViewModel;
+                    }
                     break;
                 case "DeleteEntity":
                     ObservableCollection<DERModel> tempDER = MainWindowViewModel.DERs;
