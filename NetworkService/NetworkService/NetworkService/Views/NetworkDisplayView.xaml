@@ -4,12 +4,192 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:model="clr-namespace:NetworkService.Model"
     xmlns:local="clr-namespace:NetworkService.Views"
+    xmlns:fa5="http://schemas.fontawesome.com/icons/"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     mc:Ignorable="d" 
     d:DesignHeight="640"
     d:DesignWidth="360"
-    Background="Red">
+    Background="Transparent">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+
+        <Border Background="#333333" CornerRadius="15" Grid.Row="1" Grid.Column="0" Margin="5"/>
+
+        <TextBlock
+            Style="{StaticResource DefaultTextBlockStyle}"
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Text="NETWORK ENTITIES"
+            FontWeight="Bold"
+            FontSize="20"
+            Margin="10"
+            Foreground="Black"/>
+
+
+        <ScrollViewer
+        Grid.Row="1"
+        VerticalScrollBarVisibility="Auto">
+
+            <Grid
+            Grid.Row="1"
+            Panel.ZIndex="1000">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label
+                Style="{StaticResource DefaultLabelStyle}"
+                Grid.Row="0"
+                Foreground="White"
+                FontSize="15"
+                Content="SOLAR PANEL"
+                Margin="10,10,10,0"/>
+                <ListView
+                x:Name="ListView1"
+                Grid.Row="1"
+                Margin="20,10,20,0"
+                ItemsSource="{Binding DERGroups[0].DERModels}"
+                d:ItemsSource="{d:SampleData ItemCount=2}"
+                SelectedItem="{Binding Path=SelectedDER, Mode=TwoWay}">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type model:DERModel}">
+                            <StackPanel 
+                            Orientation="Horizontal">
+                                <Image 
+                                Source="{Binding Type.ImagePath}"
+                                Width="30"
+                                Height="30"/>
+                                <TextBlock
+                                Style="{StaticResource DefaultTextBlockStyle}"
+                                Text="{Binding Name}" 
+                                VerticalAlignment="Center" 
+                                FontSize="15"
+                                Foreground="Black"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                               CommandParameter="{Binding ElementName=ListView1}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                            <i:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                </ListView>
+
+            </Grid>
+        </ScrollViewer>
+
+
+        <Grid
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <ItemsControl
+            x:Name="LinesItemsControl"
+            Grid.Row="0" Grid.Column="0"
+            Grid.RowSpan="4" Grid.ColumnSpan="3" 
+            Panel.ZIndex="200"
+            ItemsSource="{Binding LinesToDisplay}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+
+            <DockPanel
+            Grid.Row="0" Grid.Column="0">
+                <ContentControl 
+                DockPanel.Dock="Top"
+                Width="90"
+                Height="60"
+                Margin="10,0"
+                Content="{Binding Path=CanvasCollection[0]}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Drop">
+                            <i:InvokeCommandAction Command="{Binding DropDEROnCanvasCommand}" CommandParameter="0"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding MouseLeftButtonDownCommand}" CommandParameter="0"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                            <i:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ContentControl>
+                <TextBlock
+                VerticalAlignment="Top"
+                Width="80"
+                Height="20"
+                FontSize="15"
+                Background="#333333"
+                Foreground="White">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}  {0} : {1}">
+                            <Binding Path="EntityInfo[0].ID"/>
+                            <Binding Path="EntityInfo[0].Value"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Button
+                Style="{StaticResource EntityButtonStyle}"
+                Cursor="Hand"
+                ToolTip="Remove Item From Grid"
+                Command="{Binding ClearCanvasCommand}"
+                CommandParameter="0"
+                Width="20"
+                Height="20"
+                VerticalAlignment="Top">
+                    <Image 
+                    Source="/Assets/Icons/x_icon.png" 
+                    Stretch="Uniform"
+                    Margin="5"/>
+                </Button>
+            </DockPanel>
+            <Border
+            Grid.Row="0" Grid.Column="0"
+            BorderBrush="{Binding BorderBrushCollection[0]}"
+            BorderThickness="3">
+            </Border>
+
+        </Grid>
+
     </Grid>
 </UserControl>

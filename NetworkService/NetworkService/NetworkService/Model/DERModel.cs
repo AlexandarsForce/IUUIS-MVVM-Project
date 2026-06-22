@@ -15,6 +15,7 @@ namespace NetworkService.Model
         private DERModelType type;
         private int power;
         private bool isSelected;
+        private DERState state;
 
         public int Id
         {
@@ -46,6 +47,12 @@ namespace NetworkService.Model
             set { isSelected = value; OnPropertyChanged("IsSelected"); }
         }
 
+        public DERState State
+        {
+            get { return state; }
+            set { state = value; OnPropertyChanged("State"); }
+        }
+
         public DERModel() { Id = ++totalId; }
 
         public DERModel(string name, DERModelType type)
@@ -53,6 +60,7 @@ namespace NetworkService.Model
             Id = ++totalId;
             Name = name;
             Type = type;
+            State = DERState.NORMAL;
         }
 
         protected override void ValidateSelf()

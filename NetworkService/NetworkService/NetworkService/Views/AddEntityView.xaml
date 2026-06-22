@@ -25,11 +25,11 @@
             Grid.Row="0"
             Grid.Column="0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             Text="NEW ENTITY"
             FontWeight="Bold"
             FontSize="20"
-            Margin="30,0"
+            Margin="10"
             Foreground="Black"/>
 
 

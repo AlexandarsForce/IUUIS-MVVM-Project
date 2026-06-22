@@ -32,10 +32,11 @@
             Grid.Row="0"
             Grid.Column="0"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             Text="NETWORK ENTITIES"
             FontWeight="Bold"
             FontSize="20"
+            Margin="10"
             Foreground="Black"/>
 
         <StackPanel

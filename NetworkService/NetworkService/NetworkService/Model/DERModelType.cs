@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace NetworkService.Model
 {
+    public enum DERState
+    {
+        LOW,
+        NORMAL,
+        HIGH
+    }
     public enum DERType
     {
         SOLAR_PANEL,

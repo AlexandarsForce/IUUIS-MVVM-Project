@@ -75,10 +75,12 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\BindableBase.cs" />
     <Compile Include="Helpers\MyICommand.cs" />
+    <Compile Include="Helpers\ToastNotify.cs" />
     <Compile Include="Helpers\ValidationBase.cs" />
     <Compile Include="Helpers\ValidationErrors.cs" />
     <Compile Include="Model\DERModel.cs" />
     <Compile Include="Model\DERModelType.cs" />
+    <Compile Include="Model\DERGroup.cs" />
     <Compile Include="ViewModel\AddEntityViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MeasurementGraphViewModel.cs" />
