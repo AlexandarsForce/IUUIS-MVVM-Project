@@ -29,7 +29,7 @@
             Text="NEW ENTITY"
             FontWeight="Bold"
             FontSize="20"
-            Margin="10"
+            Margin="0"
             Foreground="Black"/>
 
 

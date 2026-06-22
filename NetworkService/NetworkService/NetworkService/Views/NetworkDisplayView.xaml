@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="2.5*"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
@@ -35,7 +35,7 @@
             Text="NETWORK ENTITIES"
             FontWeight="Bold"
             FontSize="20"
-            Margin="10"
+            Margin="0"
             Foreground="Black"/>
 
 
@@ -61,11 +61,11 @@
                 Foreground="White"
                 FontSize="15"
                 Content="SOLAR PANEL"
-                Margin="10,10,10,0"/>
+                Margin="20,0,20,0"/>
                 <ListView
                 x:Name="ListView1"
                 Grid.Row="1"
-                Margin="20,10,20,0"
+                Margin="20,0,20,0"
                 ItemsSource="{Binding DERGroups[0].DERModels}"
                 d:ItemsSource="{d:SampleData ItemCount=2}"
                 SelectedItem="{Binding Path=SelectedDER, Mode=TwoWay}">
@@ -82,7 +82,8 @@
                                 Style="{StaticResource DefaultTextBlockStyle}"
                                 Text="{Binding Name}" 
                                 VerticalAlignment="Center" 
-                                FontSize="15"
+                                FontSize="12"
+                                FontWeight="Bold"
                                 Foreground="Black"/>
                             </StackPanel>
                         </DataTemplate>
@@ -92,6 +93,52 @@
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
                                CommandParameter="{Binding ElementName=ListView1}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                            <i:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                </ListView>
+
+                <Label
+                Style="{StaticResource DefaultLabelStyle}"
+                Grid.Row="2"
+                Foreground="White"
+                FontSize="15"
+                Content="WIND TURBINE"
+                Margin="20,0,20,0"/>
+                <ListView
+                x:Name="ListView2"
+                Grid.Row="3"
+                Margin="20,0,20,0"
+                ItemsSource="{Binding DERGroups[1].DERModels}"
+                d:ItemsSource="{d:SampleData ItemCount=2}"
+                SelectedItem="{Binding Path=SelectedDER, Mode=TwoWay}">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type model:DERModel}">
+                            <StackPanel 
+                            Orientation="Horizontal">
+                                <Image 
+                                Source="{Binding Type.ImagePath}"
+                                Width="30"
+                                Height="30"/>
+                                <TextBlock
+                                Style="{StaticResource DefaultTextBlockStyle}"
+                                Text="{Binding Name}" 
+                                VerticalAlignment="Center" 
+                                FontSize="12"
+                                FontWeight="Bold"
+                                Foreground="Black"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                            CommandParameter="{Binding ElementName=ListView2}"/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseLeftButtonUp">
                             <i:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}"/>
@@ -163,8 +210,8 @@
                 Foreground="White">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}  {0} : {1}">
-                            <Binding Path="EntityInfo[0].ID"/>
-                            <Binding Path="EntityInfo[0].Value"/>
+                            <Binding Path="DERInfo[0].Id"/>
+                            <Binding Path="DERInfo[0].Power"/>
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>

@@ -39,11 +39,11 @@ namespace NetworkService.Model
             Name = name;
             if(Name == DERType.SOLAR_PANEL)
             {
-                ImagePath = "/Assets/Images/solar_panel.png";
+                ImagePath = "..\\..\\Assets\\Images\\solar_panel.jpg";
             }
             else if(Name == DERType.WIND_TURBINE)
             {
-                ImagePath = "/Assets/Images/wind_turbine.png";
+                ImagePath = "..\\..\\Assets\\Images\\wind_turbine.jpg";
             }
         }
     }

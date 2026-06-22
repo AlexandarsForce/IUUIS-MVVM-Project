@@ -9,10 +9,10 @@ namespace NetworkService.Model
 {
     public class DERGroup
     {
-        public string Name { get; set; }
+        public DERType Name { get; set; }
         public ObservableCollection<DERModel> DERModels { get; set; }
 
-        public DERGroup(string name)
+        public DERGroup(DERType name)
         {
             Name = name;
             DERModels = new ObservableCollection<DERModel>();

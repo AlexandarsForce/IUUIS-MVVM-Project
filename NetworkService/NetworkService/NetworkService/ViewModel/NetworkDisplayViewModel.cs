@@ -1,6 +1,7 @@
 ﻿using NetworkService.Helpers;
 using NetworkService.Model;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -89,7 +90,8 @@ namespace NetworkService.ViewModel
                     Canvas canvas = new Canvas();
                     if (AddedToGrid.ContainsKey(i))
                     {
-                        var logo = new BitmapImage(new Uri(AddedToGrid[i].Type.ImagePath, UriKind.Relative));
+                        string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AddedToGrid[i].Type.ImagePath);
+                        var logo = new BitmapImage(new Uri(filePath, UriKind.Relative));
                         canvas.Background = new ImageBrush(logo);
                         DERInfo.Add(AddedToGrid[i]);
                         canvas.Resources["taken"] = true;
@@ -152,8 +154,8 @@ namespace NetworkService.ViewModel
 
             DERGroups = DERGroups ?? new ObservableCollection<DERGroup>
             {
-                new DERGroup("SOLAR PANEL"),
-                new DERGroup("WIND TURBINE"),
+                new DERGroup(DERType.SOLAR_PANEL),
+                new DERGroup(DERType.WIND_TURBINE),
             };
             DERGroups[0].DERModels.Clear();
             DERGroups[1].DERModels.Clear();
@@ -315,8 +317,8 @@ namespace NetworkService.ViewModel
             if (draggedItem != null && !CanvasCollection[index].Resources.Contains("taken"))
             {
                 SaveState();
-
-                var logo = new BitmapImage(new Uri(draggedItem.Type.ImagePath, UriKind.Relative));
+                string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, draggedItem.Type.ImagePath);
+                var logo = new BitmapImage(new Uri(filePath, UriKind.Relative));
                 CanvasCollection[index].Background = new ImageBrush(logo);
                 CanvasCollection[index].Resources.Add("taken", true);
                 CanvasCollection[index].Resources.Add("data", draggedItem);
