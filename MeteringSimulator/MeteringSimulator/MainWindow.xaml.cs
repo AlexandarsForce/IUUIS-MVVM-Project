@@ -77,6 +77,7 @@ namespace MeteringSimulator
                 this.Dispatcher.Invoke(() =>
                 {
                     //Slanje izmene stanja nekog objekta
+                    askForCount();
                     sendReport();
                     //Upis u text box, radi lakse provere
                     textBox.Text = "Entity_" + objectNum + " changed state to: " + value.ToString() + "\n" + textBox.Text;
