@@ -1,5 +1,6 @@
 ﻿using NetworkService.Helpers;
 using NetworkService.Model;
+using Notification.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,11 +49,13 @@ namespace NetworkService.ViewModel
         private void OnFilter(string filterOption)
         {
             DERs = MainWindowViewModel.DERs;
+            int tempId;
             switch (filterOption)
             {
                 case "SearchFilter":
                     ObservableCollection<DERModel> filteredDERs = new ObservableCollection<DERModel>();
-                    if (!string.IsNullOrEmpty(FilterIDTextBox))
+                    bool idFiltered = int.TryParse(FilterIDTextBox, out tempId);
+                    if (!string.IsNullOrEmpty(FilterIDTextBox) && idFiltered)
                     {
                         if (FilterTypeComboBox != null)
                         {
@@ -60,7 +63,7 @@ namespace NetworkService.ViewModel
                             {
                                 foreach (var der in DERs)
                                 {
-                                    if (der.Id < int.Parse(FilterIDTextBox) && der.Type.Name == FilterTypeComboBox)
+                                    if (der.Id < tempId && der.Type.Name == FilterTypeComboBox)
                                     {
                                         filteredDERs.Add(der);
                                     }
@@ -70,7 +73,7 @@ namespace NetworkService.ViewModel
                             {
                                 foreach (var der in DERs)
                                 {
-                                    if (der.Id == int.Parse(FilterIDTextBox) && der.Type.Name == FilterTypeComboBox)
+                                    if (der.Id == tempId && der.Type.Name == FilterTypeComboBox)
                                     {
                                         filteredDERs.Add(der);
                                     }
@@ -80,7 +83,7 @@ namespace NetworkService.ViewModel
                             {
                                 foreach (var der in DERs)
                                 {
-                                    if (der.Id > int.Parse(FilterIDTextBox) && der.Type.Name == FilterTypeComboBox)
+                                    if (der.Id > tempId && der.Type.Name == FilterTypeComboBox)
                                     {
                                         filteredDERs.Add(der);
                                     }
@@ -93,7 +96,7 @@ namespace NetworkService.ViewModel
                             {
                                 foreach (var der in DERs)
                                 {
-                                    if (der.Id < int.Parse(FilterIDTextBox))
+                                    if (der.Id < tempId)
                                     {
                                         filteredDERs.Add(der);
                                     }
@@ -103,7 +106,7 @@ namespace NetworkService.ViewModel
                             {
                                 foreach (var der in DERs)
                                 {
-                                    if (der.Id == int.Parse(FilterIDTextBox))
+                                    if (der.Id == tempId)
                                     {
                                         filteredDERs.Add(der);
                                     }
@@ -113,7 +116,7 @@ namespace NetworkService.ViewModel
                             {
                                 foreach (var der in DERs)
                                 {
-                                    if (der.Id > int.Parse(FilterIDTextBox))
+                                    if (der.Id > tempId)
                                     {
                                         filteredDERs.Add(der);
                                     }
@@ -123,12 +126,19 @@ namespace NetworkService.ViewModel
                     }
                     else
                     {
-                        foreach (var der in DERs)
+                        if (FilterTypeComboBox != null)
                         {
-                            if (FilterTypeComboBox != null && der.Type.Name == FilterTypeComboBox)
+                            foreach (var der in DERs)
                             {
-                                filteredDERs.Add(der);
+                                if (der.Type.Name == FilterTypeComboBox)
+                                {
+                                    filteredDERs.Add(der);
+                                }
                             }
+                        }
+                        else
+                        {
+                            filteredDERs = DERs;
                         }
                     }
                     DERs = filteredDERs;
@@ -171,6 +181,14 @@ namespace NetworkService.ViewModel
                     {
                         DERs.Remove(der);
                         tempDER.Remove(der);
+                    }
+                    if (selectedDERs.Count > 0)
+                    {
+                        ToastNotify.RaiseToast("Success", "Successfully deleted selected entities.", NotificationType.Success);
+                    }
+                    else
+                    {
+                        ToastNotify.RaiseToast("Warning", "Please select entites to delete.", NotificationType.Warning);
                     }
                     MainWindowViewModel.DERs = tempDER;
                     break;

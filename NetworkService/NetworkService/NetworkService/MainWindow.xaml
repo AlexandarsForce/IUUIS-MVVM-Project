@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:NetworkService"
     xmlns:viewModel="clr-namespace:NetworkService.ViewModel"
     xmlns:views="clr-namespace:NetworkService.Views"
+    xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
     Name="MainWindowRef"
     Title="MainWindow" 
     Height="800" 
@@ -40,7 +41,6 @@
 
     <Grid>
         <Border Background="White" CornerRadius="25"/>
-        
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -52,6 +52,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            
             <ContentControl
                 Grid.Row="1"
                 Grid.Column="0"
@@ -121,6 +122,9 @@
                     Margin="10,10"/>
                 </Button>
             </Grid>
+
+            <notifications:NotificationArea x:Name="MainNotificationArea" VerticalAlignment="Top" Grid.Row="1"/>
+
         </Grid>
     </Grid>
 </Window>

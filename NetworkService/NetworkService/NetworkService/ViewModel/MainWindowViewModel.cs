@@ -85,7 +85,7 @@ namespace NetworkService.ViewModel
             }
         }
 
-        private void ShowToastNotification(NotificationContent notificationContent)
+        public void ShowToastNotification(NotificationContent notificationContent)
         {
             notificationManager.Show(notificationContent, "WindowNotificationArea");
         }
