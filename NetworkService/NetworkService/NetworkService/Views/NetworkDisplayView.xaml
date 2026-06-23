@@ -33,7 +33,7 @@
             Grid.Column="0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
-            Text="NETWORK ENTITIES"
+            Text="NETWORK DISPLAY"
             FontWeight="Bold"
             FontSize="20"
             Margin="0"
@@ -42,7 +42,10 @@
 
         <ScrollViewer
         Grid.Row="1"
-        VerticalScrollBarVisibility="Auto">
+        VerticalScrollBarVisibility="Auto"
+        MaxHeight="200"
+        Width="345"
+        HorizontalAlignment="Left">
 
             <Grid
             Grid.Row="1"
@@ -62,11 +65,11 @@
                 Foreground="White"
                 FontSize="15"
                 Content="SOLAR PANEL"
-                Margin="20,0,20,0"/>
+                Margin="20,0,10,0"/>
                 <ListView
                 x:Name="ListView1"
                 Grid.Row="1"
-                Margin="20,0,20,0"
+                Margin="20,0,10,0"
                 ItemsSource="{Binding DERGroups[0].DERModels}"
                 d:ItemsSource="{d:SampleData ItemCount=2}"
                 SelectedItem="{Binding Path=SelectedDER, Mode=TwoWay}">
@@ -108,11 +111,11 @@
                 Foreground="White"
                 FontSize="15"
                 Content="WIND TURBINE"
-                Margin="20,0,20,0"/>
+                Margin="20,0,10,0"/>
                 <ListView
                 x:Name="ListView2"
                 Grid.Row="3"
-                Margin="20,0,20,0"
+                Margin="20,0,10,0"
                 ItemsSource="{Binding DERGroups[1].DERModels}"
                 d:ItemsSource="{d:SampleData ItemCount=2}"
                 SelectedItem="{Binding Path=SelectedDER, Mode=TwoWay}">
@@ -206,7 +209,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -220,7 +223,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -264,7 +267,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -278,7 +281,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -322,7 +325,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -336,7 +339,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -380,7 +383,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -394,7 +397,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -438,7 +441,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -452,7 +455,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -496,7 +499,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -510,7 +513,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -554,7 +557,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -568,7 +571,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -612,7 +615,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -626,7 +629,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -670,7 +673,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -684,7 +687,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -728,7 +731,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -742,7 +745,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -786,7 +789,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -800,7 +803,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"
@@ -845,7 +848,7 @@
                 </ContentControl>
                 <TextBlock
                 VerticalAlignment="Top"
-                Width="80"
+                Width="90"
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
@@ -859,7 +862,7 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <Button
-                Style="{StaticResource EntityButtonStyle}"
+                Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
                 ToolTip="Remove Item From Grid"
                 Command="{Binding ClearCanvasCommand}"

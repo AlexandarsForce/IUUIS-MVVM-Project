@@ -153,6 +153,7 @@ namespace NetworkService.ViewModel
 
                                 int id = Int32.Parse(splited[0].Split('_')[1]);
                                 DERs[id].Power = Int32.Parse(splited[1]);
+                                NetworkDisplayViewModel.UpdateEntitiesOnCanvas();
                             }
                             
                         }

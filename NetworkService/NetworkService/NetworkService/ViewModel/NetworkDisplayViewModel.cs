@@ -323,7 +323,7 @@ namespace NetworkService.ViewModel
                 CanvasCollection[index].Resources.Add("taken", true);
                 CanvasCollection[index].Resources.Add("data", draggedItem);
                 AddedToGrid.Add(index, draggedItem);
-                BorderBrushCollection[index] = draggedItem.State == DERState.NORMAL ? Brushes.Transparent : Brushes.Red;
+                BorderBrushCollection[index] = draggedItem.State == DERState.NORMAL ? Brushes.Green : Brushes.Red;
                 DERInfo[index] = draggedItem;
 
                 if (draggingSourceIndex != -1)
@@ -381,7 +381,7 @@ namespace NetworkService.ViewModel
 
             if (!CanvasCollection[index].Resources.Contains("taken"))
             {
-                ToastNotify.RaiseToast("Error", "There is nothing to remove!", Notification.Wpf.NotificationType.Warning);
+                ToastNotify.RaiseToast("Warning", "Cannot perform removal on the empty field", Notification.Wpf.NotificationType.Warning);
                 return;
 
             }

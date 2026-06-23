@@ -60,7 +60,7 @@ namespace NetworkService.Model
             Id = totalId++;
             Name = name;
             Type = type;
-            State = DERState.NORMAL;
+            State = DERState.LOW;
         }
 
         protected override void ValidateSelf()

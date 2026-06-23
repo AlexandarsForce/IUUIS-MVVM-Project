@@ -24,7 +24,7 @@
             Style="{StaticResource DefaultTextBlockStyle}"
             Grid.Row="0"
             Grid.Column="0"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Text="NEW ENTITY"
             FontWeight="Bold"
