@@ -220,13 +220,13 @@ namespace NetworkService.ViewModel
         {
             index /= 3;
 
-            return Math.Round(index * 121.375 + 60.937);
+            return Math.Round(index * 86.4285 + 30.0);
         }
         private double ConvertToAbsoluteX(int index)
         {
             index %= 3;
 
-            return Math.Round(index * 148.333 + 74.167);
+            return Math.Round(index * 113.33 + 60.0);
         }
         public static List<int> FindAllConnections(int index)
         {
@@ -362,8 +362,11 @@ namespace NetworkService.ViewModel
 
                     int source = Math.Min(draggingSourceIndex, index);
                     int destination = Math.Max(draggingSourceIndex, index);
-                    Lines.Add($"{source},{destination}", CreateNewLine(source, destination));
-                    DrawExistingLines();
+                    if (!Lines.ContainsKey($"{source},{destination}"))
+                    {
+                        Lines.Add($"{source},{destination}", CreateNewLine(source, destination));
+                        DrawExistingLines();
+                    }
                 }
 
                 draggingSourceIndex = -1;

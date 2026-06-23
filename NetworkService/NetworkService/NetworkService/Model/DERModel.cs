@@ -38,7 +38,7 @@ namespace NetworkService.Model
         public int Power
         {
             get { return power; }
-            set { power = value; OnPropertyChanged("Power"); }
+            set { power = value; OnPropertyChanged("Power"); ValidateSelf(); }
         }
 
         public bool IsSelected
@@ -53,11 +53,11 @@ namespace NetworkService.Model
             set { state = value; OnPropertyChanged("State"); }
         }
 
-        public DERModel() { Id = ++totalId; }
+        public DERModel() { Id = totalId++; }
 
         public DERModel(string name, DERModelType type)
         {
-            Id = ++totalId;
+            Id = totalId++;
             Name = name;
             Type = type;
             State = DERState.NORMAL;
@@ -65,13 +65,17 @@ namespace NetworkService.Model
 
         protected override void ValidateSelf()
         {
-            if(string.IsNullOrWhiteSpace(Name))
+            if(Power < 1)
             {
-                ValidationErrors["Name"] = "Name is required.";
+                State = DERState.LOW;
             }
-            if(Power < 1 || Power > 5)
+            else if(Power > 5)
             {
-                ValidationErrors["Power"] = "Power must be between 1 and 5.";
+                State = DERState.HIGH;
+            }
+            else
+            {
+                State = DERState.NORMAL;
             }
         }
     }
