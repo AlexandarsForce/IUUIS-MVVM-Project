@@ -155,7 +155,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Icons\remove_icon.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\add_icon.png" />
     <Resource Include="Assets\Icons\delete_icon.png" />
@@ -169,6 +171,9 @@
   <ItemGroup>
     <Resource Include="Assets\Images\solar_panel.jpg" />
     <Resource Include="Assets\Images\wind_turbine.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\toggle_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace NetworkService.ViewModel
 {
@@ -14,6 +15,8 @@ namespace NetworkService.ViewModel
     {
         public List<DERType> DERTypes { get; set; } = new List<DERType> { DERType.SOLAR_PANEL, DERType.WIND_TURBINE };
         public MyICommand AddEntityCommand { get; set; }
+        public MyICommand<object> TextBoxGotFocusCommand { get; set; }
+        public MyICommand<object> TextBoxLostFocusCommand { get; set; }
 
         private string nameTextBox = string.Empty;
         private DERType? typeComboBox = null;
@@ -31,6 +34,8 @@ namespace NetworkService.ViewModel
         public AddEntityViewModel()
         {
             AddEntityCommand = new MyICommand(OnAddEntity);
+            TextBoxGotFocusCommand = new MyICommand<object>(TextBoxGotFocus);
+            TextBoxLostFocusCommand = new MyICommand<object>(TextBoxLostFocus);
         }
 
         public void ResetFields()
@@ -82,5 +87,25 @@ namespace NetworkService.ViewModel
                 ToastNotify.RaiseToast("Error", "Invalid entity properties, enter correct values.", NotificationType.Error);
             }
         }
+
+        private void TextBoxGotFocus(object obj)
+        {
+            if (obj is TextBox textBox)
+            {
+                MainWindowViewModel.Instance.SelectedTextBox = textBox;
+                MainWindowViewModel.Instance.SelectedTextBox.Focus();
+                MainWindowViewModel.Instance.KeyboardVisibility = Visibility.Visible;
+                MainWindowViewModel.Instance.IsKeyboardEnabled = true;
+            }
+        }
+        private void TextBoxLostFocus(object obj)
+        {
+            if (obj is TextBox)
+            {
+                MainWindowViewModel.Instance.KeyboardVisibility = Visibility.Hidden;
+                MainWindowViewModel.Instance.IsKeyboardEnabled = false;
+            }
+        }
+
     }
 }

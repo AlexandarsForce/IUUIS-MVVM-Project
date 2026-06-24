@@ -6,8 +6,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace NetworkService.ViewModel
 {
@@ -17,6 +21,8 @@ namespace NetworkService.ViewModel
         public List<DERType> FilterTypes { get; set; } = new List<DERType> { DERType.SOLAR_PANEL, DERType.WIND_TURBINE };
         public MyICommand<string> FilterCommand { get; set; }
         public MyICommand<string> EntityCommand { get; set; }
+        public MyICommand<object> TextBoxGotFocusCommand { get; set; }
+        public MyICommand<object> TextBoxLostFocusCommand { get; set; }
 
 
         private string filterIDTextBox = string.Empty;
@@ -37,6 +43,8 @@ namespace NetworkService.ViewModel
             DERs = new ObservableCollection<DERModel>();
             FilterCommand = new MyICommand<string>(OnFilter);
             EntityCommand = new MyICommand<string>(OnEntity);
+            TextBoxGotFocusCommand = new MyICommand<object>(TextBoxGotFocus);
+            TextBoxLostFocusCommand = new MyICommand<object>(TextBoxLostFocus);
         }
 
         public NetworkEntitiesViewModel(ObservableCollection<DERModel> newDers)
@@ -44,6 +52,8 @@ namespace NetworkService.ViewModel
             DERs = newDers;
             FilterCommand = new MyICommand<string>(OnFilter);
             EntityCommand = new MyICommand<string>(OnEntity);
+            TextBoxGotFocusCommand = new MyICommand<object>(TextBoxGotFocus);
+            TextBoxLostFocusCommand = new MyICommand<object>(TextBoxLostFocus);
         }
 
         private void OnFilter(string filterOption)
@@ -196,5 +206,25 @@ namespace NetworkService.ViewModel
                     break;
             }
         }
+
+        private void TextBoxGotFocus(object obj)
+        {
+            if (obj is TextBox textBox)
+            {
+                MainWindowViewModel.Instance.SelectedTextBox = textBox;
+                MainWindowViewModel.Instance.SelectedTextBox.Focus();
+                MainWindowViewModel.Instance.KeyboardVisibility = Visibility.Visible;
+                MainWindowViewModel.Instance.IsKeyboardEnabled = true;
+            }
+        }
+        private void TextBoxLostFocus(object obj)
+        {
+            if (obj is TextBox)
+            {
+                MainWindowViewModel.Instance.KeyboardVisibility = Visibility.Hidden;
+                MainWindowViewModel.Instance.IsKeyboardEnabled = false;
+            }
+        }
+
     }
 }

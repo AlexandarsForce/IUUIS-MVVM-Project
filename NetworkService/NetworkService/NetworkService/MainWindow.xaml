@@ -52,13 +52,13 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            
+
             <ContentControl
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.RowSpan="1"
                 Content="{Binding CurrentViewModel}" />
-            
+
             <Border Background="#333333" CornerRadius="25, 25, 0, 0" Grid.Row="0" Grid.Column="0"/>
             <Border Background="#333333" CornerRadius="0, 0, 25, 25" Grid.Row="2" Grid.Column="0"/>
             <Grid Grid.Row="2" Grid.Column="0">
@@ -124,6 +124,98 @@
             </Grid>
 
             <notifications:NotificationArea x:Name="MainNotificationArea" VerticalAlignment="Top" Grid.Row="1"/>
+
+
+            <Grid 
+            Name="KeyboardGrid"
+            Visibility="{Binding KeyboardVisibility}"
+            IsEnabled="{Binding IsKeyboardEnabled}"
+            Grid.Row="1"
+            Grid.Column="0"
+                Margin="0,360,0,0"
+            Background="Transparent" Grid.RowSpan="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Background="#333333" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0"/>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <Button Width="30" Height="45" Margin="3" Content="1" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="1"/>
+                    <Button Width="30" Height="45" Margin="3" Content="2" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="2"/>
+                    <Button Width="30" Height="45" Margin="3" Content="3" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="3"/>
+                    <Button Width="30" Height="45" Margin="3" Content="4" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="4"/>
+                    <Button Width="30" Height="45" Margin="3" Content="5" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="5"/>
+                    <Button Width="30" Height="45" Margin="3" Content="6" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="6"/>
+                    <Button Width="30" Height="45" Margin="3" Content="7" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="7"/>
+                    <Button Width="30" Height="45" Margin="3" Content="8" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="8"/>
+                    <Button Width="30" Height="45" Margin="3" Content="9" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="9"/>
+                    <Button Width="30" Height="45" Margin="3" Content="0" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputNumberCommand}" CommandParameter="0"/>
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <Button Width="30" Height="45" Margin="3" Content="Q" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="Q"/>
+                    <Button Width="30" Height="45" Margin="3" Content="W" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="W"/>
+                    <Button Width="30" Height="45" Margin="3" Content="E" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="E"/>
+                    <Button Width="30" Height="45" Margin="3" Content="R" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="R"/>
+                    <Button Width="30" Height="45" Margin="3" Content="T" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="T"/>
+                    <Button Width="30" Height="45" Margin="3" Content="Y" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="Y"/>
+                    <Button Width="30" Height="45" Margin="3" Content="U" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="U"/>
+                    <Button Width="30" Height="45" Margin="3" Content="I" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="I"/>
+                    <Button Width="30" Height="45" Margin="3" Content="O" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="O"/>
+                    <Button Width="30" Height="45" Margin="3" Content="P" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="P"/>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+                    <Button Width="30" Height="45" Margin="3" Content="A" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="A"/>
+                    <Button Width="30" Height="45" Margin="3" Content="S" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="S"/>
+                    <Button Width="30" Height="45" Margin="3" Content="D" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="D"/>
+                    <Button Width="30" Height="45" Margin="3" Content="F" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="F"/>
+                    <Button Width="30" Height="45" Margin="3" Content="G" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="G"/>
+                    <Button Width="30" Height="45" Margin="3" Content="H" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="H"/>
+                    <Button Width="30" Height="45" Margin="3" Content="J" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="J"/>
+                    <Button Width="30" Height="45" Margin="3" Content="K" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="K"/>
+                    <Button Width="30" Height="45" Margin="3" Content="L" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="L"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
+                    <Button Width="30" Height="45" Margin="3" Content="Z" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="Z"/>
+                    <Button Width="30" Height="45" Margin="3" Content="X" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="X"/>
+                    <Button Width="30" Height="45" Margin="3" Content="C" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="C"/>
+                    <Button Width="30" Height="45" Margin="3" Content="V" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="V"/>
+                    <Button Width="30" Height="45" Margin="3" Content="B" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="B"/>
+                    <Button Width="30" Height="45" Margin="3" Content="N" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="N"/>
+                    <Button Width="30" Height="45" Margin="3" Content="M" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter="M"/>
+                    <Button Width="40" Height="45" Margin="3"             Style="{StaticResource KeyboardButtonStyle}" Command="{Binding BackspaceCommand}">
+                        <Image 
+                        Source="/Assets/Icons/remove_icon.png" 
+                        Stretch="Uniform"
+                        Margin="5"/>
+                    </Button>
+
+                </StackPanel>
+
+
+                <StackPanel
+                Grid.Row="4"
+                Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <Button Width="200" Height="45" Margin="3" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding InputKeyCommand}" CommandParameter=" ">
+                    </Button>
+                    <Button Width="40" Height="45" Margin="3" Style="{StaticResource KeyboardButtonStyle}" Command="{Binding HideKeyboardCommand}">
+                        <Image
+                        Source="/Assets/Icons/toggle_icon.png" 
+                        Stretch="Uniform"
+                        Margin="10"/>
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
 
         </Grid>
     </Grid>

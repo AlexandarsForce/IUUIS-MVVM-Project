@@ -14,6 +14,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace NetworkService.ViewModel
 {
@@ -22,6 +25,10 @@ namespace NetworkService.ViewModel
         public static MainWindowViewModel Instance { get; private set; }
         public MyICommand<string> NavCommand { get; private set; }
         public MyICommand<Window> CloseWindowCommand { get; private set; }
+        public MyICommand<string> InputKeyCommand { get; set; }
+        public MyICommand<string> InputNumberCommand { get; set; }
+        public MyICommand HideKeyboardCommand { get; set; }
+        public MyICommand BackspaceCommand { get; set; }
         public static ObservableCollection<DERModel> DERs { get; set; }
 
         public NetworkEntitiesViewModel networkEntitiesViewModel;
@@ -29,17 +36,27 @@ namespace NetworkService.ViewModel
         public MeasurementGraphViewModel measurementGraphViewModel;
         public AddEntityViewModel addEntityViewModel;
         private BindableBase currentViewModel;
-        private NotificationManager notificationManager;
+        private TextBox selectedTextBox;
+        private bool isKeyboardEnabled;
+
+        private Visibility _keyboardVisibility;
+        public Visibility KeyboardVisibility { get => _keyboardVisibility; set => SetProperty(ref _keyboardVisibility, value); }
+        public bool IsKeyboardEnabled { get => isKeyboardEnabled; set => SetProperty(ref isKeyboardEnabled, value); }
+        public TextBox SelectedTextBox { get => selectedTextBox; set { SetProperty(ref selectedTextBox, value); } }
+
 
         public MainWindowViewModel()
         {
             createListener(); //Povezivanje sa serverskom aplikacijom
 
             Instance = this;
-            notificationManager = new NotificationManager();
             
             NavCommand = new MyICommand<string>(OnNav);
             CloseWindowCommand = new MyICommand<Window>(CloseWindow);
+            InputKeyCommand = new MyICommand<string>(InputKey);
+            InputNumberCommand = new MyICommand<string>(InputNumber);
+            BackspaceCommand = new MyICommand(Backspace);
+            HideKeyboardCommand = new MyICommand(HideKeyboard);
 
             DERs = new ObservableCollection<DERModel>
             {
@@ -55,6 +72,9 @@ namespace NetworkService.ViewModel
             measurementGraphViewModel = new MeasurementGraphViewModel();
             addEntityViewModel = new AddEntityViewModel();
             currentViewModel = networkEntitiesViewModel;
+
+            KeyboardVisibility = Visibility.Hidden;
+            IsKeyboardEnabled = false;
         }
 
 
@@ -64,6 +84,7 @@ namespace NetworkService.ViewModel
             set
             {
                 SetProperty(ref currentViewModel, value);
+                HideKeyboard();
             }
         }
 
@@ -85,15 +106,51 @@ namespace NetworkService.ViewModel
             }
         }
 
-        public void ShowToastNotification(NotificationContent notificationContent)
-        {
-            notificationManager.Show(notificationContent, "WindowNotificationArea");
-        }
-
         private void CloseWindow(Window MainWindow)
         {
             MainWindow.Close();
         }
+
+        #region Keyboard
+
+        private void HideKeyboard()
+        {
+            KeyboardVisibility = Visibility.Hidden;
+            IsKeyboardEnabled = false;
+        }
+        private void Backspace()
+        {
+            if (!string.IsNullOrEmpty(SelectedTextBox.SelectedText))
+            {
+                int selectionStart = SelectedTextBox.SelectionStart;
+                SelectedTextBox.Text = SelectedTextBox.Text.Remove(selectionStart, SelectedTextBox.SelectionLength);
+                SelectedTextBox.CaretIndex = selectionStart;
+                return;
+            }
+            if (SelectedTextBox.Text.Length > 0)
+            {
+
+
+                SelectedTextBox.Text = SelectedTextBox.Text.Remove(SelectedTextBox.Text.Length - 1, 1);
+            }
+        }
+        private void InputKey(string keyPressed)
+        {
+            if (SelectedTextBox != null && SelectedTextBox.Name != "FilterTextBox")
+            {
+                SelectedTextBox.Text += keyPressed;
+            }
+        }
+        private void InputNumber(string keyPressed)
+        {
+            if (SelectedTextBox != null)
+            {
+                SelectedTextBox.Text += keyPressed;
+            }
+        }
+
+        #endregion
+
 
         private void createListener()
         {

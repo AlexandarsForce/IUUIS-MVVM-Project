@@ -95,14 +95,23 @@
             </StackPanel>
 
             <TextBox
+                x:Name="FilterTextBox"
                 Style="{StaticResource DefaultTextBoxStyle}"
-                Text="{Binding FilterIDTextBox, Mode=TwoWay}"
+                Text="{Binding FilterIDTextBox, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 Width="50"
                 Margin="0,5"
                 VerticalContentAlignment="Center"
-                FontSize="12"/>
+                FontSize="12">
 
-            <ComboBox
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="GotFocus">
+                        <i:InvokeCommandAction Command="{Binding TextBoxGotFocusCommand}" CommandParameter="{Binding ElementName=FilterTextBox}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+            </TextBox>
+
+                <ComboBox
                 Width="120"
                 Margin="5"
                 ItemsSource="{Binding FilterTypes}"

@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:NetworkService.Views"
+    xmlns:local="clr-namespace:NetworkService.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     mc:Ignorable="d" 
     d:DesignHeight="640"
     d:DesignWidth="360"
@@ -66,16 +66,23 @@
             HorizontalAlignment="Left"
             Margin="15,0,0,15"/>
             <TextBox
+            x:Name="NameTextBox"
             Grid.Row="0"
             Grid.Column="1"
             Style="{StaticResource DefaultTextBoxStyle}"
-            Text="{Binding NameTextBox}"
+            Text="{Binding NameTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Width="200"
             Height="50"
             Margin="15,0,15,15"
             HorizontalAlignment="Right"
             VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"/>
+            HorizontalContentAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="GotFocus">
+                        <i:InvokeCommandAction Command="{Binding TextBoxGotFocusCommand}" CommandParameter="{Binding ElementName=NameTextBox}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <Label
             Grid.Row="0"
             Grid.Column="1"
