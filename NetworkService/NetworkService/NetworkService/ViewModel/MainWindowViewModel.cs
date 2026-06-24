@@ -95,7 +95,6 @@ namespace NetworkService.ViewModel
             MainWindow.Close();
         }
 
-
         private void createListener()
         {
             var tcp = new TcpListener(IPAddress.Any, 25675);
@@ -153,6 +152,7 @@ namespace NetworkService.ViewModel
 
                                 int id = Int32.Parse(splited[0].Split('_')[1]);
                                 DERs[id].Power = Int32.Parse(splited[1]);
+                                AddValueToList(DERs[id]);
                                 NetworkDisplayViewModel.UpdateEntitiesOnCanvas();
                             }
                             
@@ -164,5 +164,20 @@ namespace NetworkService.ViewModel
             listeningThread.IsBackground = true;
             listeningThread.Start();
         }
+
+
+        private void AddValueToList(DERModel derModel)
+        {
+            if (derModel.LastPowers.Count == 5)
+            {
+                derModel.LastPowers.RemoveAt(0);
+                derModel.LastPowers.Add(new Pair<DateTime, int>(DateTime.Now, derModel.Power));
+            }
+            else
+            {
+                derModel.LastPowers.Add(new Pair<DateTime, int>(DateTime.Now, derModel.Power));
+            }
+        }
+
     }
 }

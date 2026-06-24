@@ -8,8 +8,305 @@
     mc:Ignorable="d" 
     d:DesignHeight="640"
     d:DesignWidth="360"
-    Background="Yellow">
+    Background="Transparent">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#333333" CornerRadius="15" Grid.Row="1" Grid.Column="0" Margin="5"/>
+
+        <TextBlock
+            Style="{StaticResource DefaultTextBlockStyle}"
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Text="NETWORK MEASUREMENT GRAPH"
+            FontWeight="Bold"
+            FontSize="20"
+            Margin="0"
+            Foreground="Black"/>
+
+
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Content="Selected entity:"
+            Style="{StaticResource DefaultLabelStyle}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Foreground="White"
+            Margin="15,15,15,15"/>
+        <ComboBox
+            ItemsSource="{Binding DERModels}"
+            SelectedItem="{Binding SelectedDER}"
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="180"
+            Height="50"
+            Margin="15,15,15,15"
+            FontFamily="Century Gothic"
+            FontSize="16"
+            FontWeight="Bold"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            HorizontalAlignment="Right">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                        Text="{Binding Name}"
+                        Margin="0,-5,0,10"
+                        FontSize="20"
+                        Padding="3"/>
+                        <TextBlock
+                        Text="ID:"
+                        Margin="0,-5,0,0"
+                        FontSize="20"
+                        Padding="3"/>
+                        <TextBlock
+                        Text="{Binding Id}"
+                        Margin="0,-5,0,0"
+                        FontSize="20"
+                        Padding="3"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Border
+            Grid.Row="2"
+            Grid.Column="0"
+            Background="#D9D9D9"
+            Width="350"
+            Height="350"
+            CornerRadius="25"
+            Margin="0,25,0,0"/>
+
+        <Canvas
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="30,120,30,120"
+            Background="Transparent">
+
+            <Line X1="20" Y1="0"
+                  X2="20" Y2="250"
+                  StrokeThickness="5"
+                  Stroke="Black"/>
+            <Line X1="17.5" Y1="250"
+                  X2="280" Y2="250"
+                  Stroke="Black"
+                  StrokeThickness="5"/>
+
+            <Line X1="70" Y1="0"
+                  X2="70" Y2="250"
+                  Stroke="Orange"
+                  StrokeThickness="3"/>
+            <Line X1="120" Y1="0"
+                  X2="120" Y2="250"
+                  Stroke="Orange"
+                  StrokeThickness="3"/>
+            <Line X1="170" Y1="0"
+                  X2="170" Y2="250"
+                  Stroke="Orange"
+                  StrokeThickness="3"/>
+            <Line X1="220" Y1="0"
+                  X2="220" Y2="250"
+                  Stroke="Orange"
+                  StrokeThickness="3"/>
+            <Line X1="270" Y1="0"
+                  X2="270" Y2="250"
+                  Stroke="Orange"
+                  StrokeThickness="3"/>
+
+            <Path
+            Stroke="Black"
+            StrokeThickness="5">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathFigure StartPoint="{Binding StartPoint}">
+                            <LineSegment
+                            x:Name="LinePoint_1"
+                            Point="{Binding LinePoint1}"/>
+                            <LineSegment 
+                            x:Name="LinePoint_2"
+                            Point="{Binding LinePoint2}"/>
+                            <LineSegment
+                            x:Name="LinePoint_3"
+                            Point="{Binding LinePoint3}"/>
+                            <LineSegment 
+                            x:Name="LinePoint_4"
+                            Point="{Binding LinePoint4}"/>
+                            <LineSegment
+                            x:Name="LinePoint_5"
+                            Point="{Binding LinePoint5}"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+
+            <Ellipse 
+            x:Name="Ellipse_1"
+            Margin="{Binding MarginPoint1}"
+            Width="30"
+            Height="30"
+            Fill="{Binding CircleColor1}"/>
+
+            <Ellipse 
+            x:Name="Ellipse_2"
+            Margin="{Binding MarginPoint2}"
+            Width="30"
+            Height="30"
+            Fill="{Binding CircleColor2}"/>
+
+            <Ellipse 
+            x:Name="Ellipse_3"
+            Margin="{Binding MarginPoint3}"
+            Width="30"
+            Height="30"
+            Fill="{Binding CircleColor3}"/>
+            <Ellipse 
+            x:Name="Ellipse_4"
+            Margin="{Binding MarginPoint4}"
+            Width="30"
+            Height="30"
+            Fill="{Binding CircleColor4}"/>
+            <Ellipse 
+            x:Name="Ellipse_5"
+            Margin="{Binding MarginPoint5}"
+            Width="30"
+            Height="30"
+            Fill="{Binding CircleColor5}"/>
+
+            <TextBlock
+            Text="{Binding CircleText1}"
+            Margin="{Binding MarginPoint1}"
+            Width="30"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Padding="6"
+            Foreground="White"
+            Background="Transparent"/>
+
+            <TextBlock
+            Text="{Binding CircleText2}"
+            Margin="{Binding MarginPoint2}"
+            Width="30"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Padding="6"
+            Foreground="White"
+            Background="Transparent"/>
+
+            <TextBlock
+            Text="{Binding CircleText3}"
+            Margin="{Binding MarginPoint3}"
+            Width="30"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Padding="6"
+            Foreground="White"
+            Background="Transparent"/>
+
+            <TextBlock
+            Text="{Binding CircleText4}"
+            Margin="{Binding MarginPoint4}"
+            Width="30"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Padding="6"
+            Foreground="White"
+            Background="Transparent"/>
+
+            <TextBlock
+            Text="{Binding CircleText5}"
+            Margin="{Binding MarginPoint5}"
+            Width="30"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            TextAlignment="Center"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Padding="6"
+            Foreground="White"
+            Background="Transparent"/>
+
+
+            <TextBlock
+            Text="{Binding Time1}"
+            Margin="25 270"
+            Width="40"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Foreground="Orange"/>
+            <TextBlock
+            Text="{Binding Time2}"
+            Margin="75 270"
+            Width="40"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Foreground="Orange"/>
+            <TextBlock
+            Text="{Binding Time3}"
+            Margin="125 270"
+            Width="40"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Foreground="Orange"/>
+            <TextBlock
+            Text="{Binding Time4}"
+            Margin="175 270"
+            Width="40"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Foreground="Orange"/>
+            <TextBlock
+            Text="{Binding Time5}"
+            Margin="225 270"
+            Width="40"
+            FontSize="15"
+            FontFamily="Century Gothic"
+            FontWeight="Bold"
+            Foreground="Orange"/>
+
+
+
+        </Canvas>
+
+
     </Grid>
 </UserControl>

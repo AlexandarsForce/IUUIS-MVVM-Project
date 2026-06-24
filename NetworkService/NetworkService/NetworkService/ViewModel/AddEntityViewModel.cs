@@ -74,12 +74,12 @@ namespace NetworkService.ViewModel
             {
                 DERModel newDER = new DERModel(NameTextBox,new DERModelType((DERType)TypeComboBox));
                 MainWindowViewModel.DERs.Add(newDER);
-                ToastNotify.RaiseToast("Success", "Successfully added new entity", NotificationType.Success);
+                ToastNotify.RaiseToast("Success", "Successfully added new entity.", NotificationType.Success);
                 MainWindowViewModel.Instance.CurrentViewModel = MainWindowViewModel.Instance.networkEntitiesViewModel;
             }
             else
             {
-                ToastNotify.RaiseToast("Error", "Invalid entity properties, enter correct values", NotificationType.Error);
+                ToastNotify.RaiseToast("Error", "Invalid entity properties, enter correct values.", NotificationType.Error);
             }
         }
     }

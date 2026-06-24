@@ -131,6 +131,7 @@
                 Style="{StaticResource EntityButtonStyle}"
                 Command="{Binding AddEntityCommand}"
                 Content="Add"
+                Foreground="#333333"
                 Grid.Row="2"
                 Grid.Column="1"
                 Width="100"

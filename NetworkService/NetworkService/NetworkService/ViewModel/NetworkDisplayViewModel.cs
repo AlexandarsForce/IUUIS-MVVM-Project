@@ -1,11 +1,12 @@
 ﻿using NetworkService.Helpers;
 using NetworkService.Model;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -264,7 +265,7 @@ namespace NetworkService.ViewModel
 
         #endregion
 
-        #region Drag & Drop and Canvas Logic
+        #region Drag and Drop
 
         private void OnLeftMouseButtonUp()
         {
@@ -323,7 +324,10 @@ namespace NetworkService.ViewModel
                 CanvasCollection[index].Resources.Add("taken", true);
                 CanvasCollection[index].Resources.Add("data", draggedItem);
                 AddedToGrid.Add(index, draggedItem);
-                BorderBrushCollection[index] = draggedItem.State == DERState.NORMAL ? Brushes.Green : Brushes.Red;
+                if (draggedItem.State == DERState.NORMAL) { BorderBrushCollection[index] = Brushes.Green; }
+                else if (draggedItem.State == DERState.HIGH) { BorderBrushCollection[index] = Brushes.Red; }
+                else { BorderBrushCollection[index] = Brushes.Orange; }
+
                 DERInfo[index] = draggedItem;
 
                 if (draggingSourceIndex != -1)
@@ -381,7 +385,7 @@ namespace NetworkService.ViewModel
 
             if (!CanvasCollection[index].Resources.Contains("taken"))
             {
-                ToastNotify.RaiseToast("Warning", "Cannot perform removal on the empty field", Notification.Wpf.NotificationType.Warning);
+                ToastNotify.RaiseToast("Warning", "Cannot perform removal on the empty field.", Notification.Wpf.NotificationType.Warning);
                 return;
 
             }
@@ -420,7 +424,7 @@ namespace NetworkService.ViewModel
 
         #endregion
 
-        #region Adding/Removing From Categories
+        #region Groups
         private void AddToGroup(DERModel derModel)
         {
             foreach (DERGroup d in DERGroups)
@@ -460,7 +464,9 @@ namespace NetworkService.ViewModel
                         {
                             if (AddedToGrid.TryGetValue(i, out DERModel derModel))
                             {
-                                BorderBrushCollection[i] = derModel.State == DERState.NORMAL ? Brushes.Green : Brushes.Red;
+                                if (derModel.State == DERState.NORMAL) { BorderBrushCollection[i] = Brushes.Green; }
+                                else if (derModel.State == DERState.HIGH) { BorderBrushCollection[i] = Brushes.Red; }
+                                else { BorderBrushCollection[i] = Brushes.Orange; }
                             }
                         }
                     }
@@ -470,7 +476,7 @@ namespace NetworkService.ViewModel
 
         #endregion
 
-        #region Undo Logic
+        #region Undo
 
         public static void SaveState()
         {

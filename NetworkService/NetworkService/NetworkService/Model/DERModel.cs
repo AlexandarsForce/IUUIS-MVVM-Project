@@ -15,6 +15,7 @@ namespace NetworkService.Model
         private DERModelType type;
         private int power;
         private bool isSelected;
+        private List<Pair<DateTime, int>> lastPowers;
         private DERState state;
 
         public int Id
@@ -53,10 +54,17 @@ namespace NetworkService.Model
             set { state = value; OnPropertyChanged("State"); }
         }
 
+        public List<Pair<DateTime, int>> LastPowers
+        {
+            get { return lastPowers; }
+            set { lastPowers = value; OnPropertyChanged("LastPowers"); }
+        }
+
         public DERModel() { Id = totalId++; }
 
         public DERModel(string name, DERModelType type)
         {
+            lastPowers = new List<Pair<DateTime, int>>();
             Id = totalId++;
             Name = name;
             Type = type;

@@ -39,9 +39,9 @@ namespace NetworkService.ViewModel
             EntityCommand = new MyICommand<string>(OnEntity);
         }
 
-        public NetworkEntitiesViewModel(ObservableCollection<DERModel> ders)
+        public NetworkEntitiesViewModel(ObservableCollection<DERModel> newDers)
         {
-            DERs = ders;
+            DERs = newDers;
             FilterCommand = new MyICommand<string>(OnFilter);
             EntityCommand = new MyICommand<string>(OnEntity);
         }
