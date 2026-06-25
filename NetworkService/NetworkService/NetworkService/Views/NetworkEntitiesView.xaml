@@ -166,7 +166,7 @@
         CanUserSortColumns="False"
         BorderBrush="White"
         BorderThickness="0"
-        ItemsSource="{Binding DERs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        ItemsSource="{Binding DERModels, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         RowStyle="{StaticResource DefaultDataGridRowStyle}">
             <DataGrid.Columns>
 

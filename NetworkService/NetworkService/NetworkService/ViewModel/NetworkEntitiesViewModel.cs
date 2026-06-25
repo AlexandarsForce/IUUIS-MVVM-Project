@@ -17,7 +17,7 @@ namespace NetworkService.ViewModel
 {
     public class NetworkEntitiesViewModel : BindableBase
     {
-        private ObservableCollection<DERModel> ders;
+        private ObservableCollection<DERModel> derModels;
         public List<DERType> FilterTypes { get; set; } = new List<DERType> { DERType.SOLAR_PANEL, DERType.WIND_TURBINE };
         public MyICommand<string> FilterCommand { get; set; }
         public MyICommand<string> EntityCommand { get; set; }
@@ -31,7 +31,7 @@ namespace NetworkService.ViewModel
         private bool? equalToRadioButton = false;
         private bool? greaterThanRadioButton = false;
 
-        public ObservableCollection<DERModel> DERs { get { return ders; } set { ders = value; OnPropertyChanged("DERs"); } }
+        public ObservableCollection<DERModel> DERModels { get { return derModels; } set { derModels = value; OnPropertyChanged("DERModels"); } }
         public string FilterIDTextBox { get { return filterIDTextBox; } set { filterIDTextBox = value; OnPropertyChanged("FilterIDTextBox"); } }
         public DERType? FilterTypeComboBox { get { return filterTypeComboBox; } set { filterTypeComboBox = value; OnPropertyChanged("FilterTypeComboBox"); } }
         public bool? LessThanRadioButton { get { return lessThanRadioButton; } set { lessThanRadioButton = value; OnPropertyChanged("LessThanRadioButton"); } }
@@ -40,7 +40,7 @@ namespace NetworkService.ViewModel
 
         public NetworkEntitiesViewModel()
         {
-            DERs = new ObservableCollection<DERModel>();
+            DERModels = new ObservableCollection<DERModel>();
             FilterCommand = new MyICommand<string>(OnFilter);
             EntityCommand = new MyICommand<string>(OnEntity);
             TextBoxGotFocusCommand = new MyICommand<object>(TextBoxGotFocus);
@@ -49,7 +49,7 @@ namespace NetworkService.ViewModel
 
         public NetworkEntitiesViewModel(ObservableCollection<DERModel> newDers)
         {
-            DERs = newDers;
+            DERModels = newDers;
             FilterCommand = new MyICommand<string>(OnFilter);
             EntityCommand = new MyICommand<string>(OnEntity);
             TextBoxGotFocusCommand = new MyICommand<object>(TextBoxGotFocus);
@@ -58,7 +58,7 @@ namespace NetworkService.ViewModel
 
         private void OnFilter(string filterOption)
         {
-            DERs = MainWindowViewModel.DERs;
+            DERModels = MainWindowViewModel.DERs;
             int tempId;
             switch (filterOption)
             {
@@ -71,7 +71,7 @@ namespace NetworkService.ViewModel
                         {
                             if (LessThanRadioButton == true)
                             {
-                                foreach (var der in DERs)
+                                foreach (var der in DERModels)
                                 {
                                     if (der.Id < tempId && der.Type.Name == FilterTypeComboBox)
                                     {
@@ -81,7 +81,7 @@ namespace NetworkService.ViewModel
                             }
                             else if (EqualToRadioButton == true)
                             {
-                                foreach (var der in DERs)
+                                foreach (var der in DERModels)
                                 {
                                     if (der.Id == tempId && der.Type.Name == FilterTypeComboBox)
                                     {
@@ -91,7 +91,7 @@ namespace NetworkService.ViewModel
                             }
                             else if (GreaterThanRadioButton == true)
                             {
-                                foreach (var der in DERs)
+                                foreach (var der in DERModels)
                                 {
                                     if (der.Id > tempId && der.Type.Name == FilterTypeComboBox)
                                     {
@@ -104,7 +104,7 @@ namespace NetworkService.ViewModel
                         {
                             if (LessThanRadioButton == true)
                             {
-                                foreach (var der in DERs)
+                                foreach (var der in DERModels)
                                 {
                                     if (der.Id < tempId)
                                     {
@@ -114,7 +114,7 @@ namespace NetworkService.ViewModel
                             }
                             else if (EqualToRadioButton == true)
                             {
-                                foreach (var der in DERs)
+                                foreach (var der in DERModels)
                                 {
                                     if (der.Id == tempId)
                                     {
@@ -124,7 +124,7 @@ namespace NetworkService.ViewModel
                             }
                             else if (GreaterThanRadioButton == true)
                             {
-                                foreach (var der in DERs)
+                                foreach (var der in DERModels)
                                 {
                                     if (der.Id > tempId)
                                     {
@@ -138,7 +138,7 @@ namespace NetworkService.ViewModel
                     {
                         if (FilterTypeComboBox != null)
                         {
-                            foreach (var der in DERs)
+                            foreach (var der in DERModels)
                             {
                                 if (der.Type.Name == FilterTypeComboBox)
                                 {
@@ -148,10 +148,10 @@ namespace NetworkService.ViewModel
                         }
                         else
                         {
-                            filteredDERs = DERs;
+                            filteredDERs = DERModels;
                         }
                     }
-                    DERs = filteredDERs;
+                    DERModels = filteredDERs;
                     break;
 
                 case "ResetFilter":
@@ -171,7 +171,8 @@ namespace NetworkService.ViewModel
             switch (entityOption)
             {
                 case "AddEntity":
-                    if(MainWindowViewModel.Instance != null)
+                    SaveAddState();
+                    if (MainWindowViewModel.Instance != null)
                     {
                         MainWindowViewModel.Instance.addEntityViewModel.ResetFields();
                         MainWindowViewModel.Instance.CurrentViewModel = MainWindowViewModel.Instance.addEntityViewModel;
@@ -180,6 +181,7 @@ namespace NetworkService.ViewModel
                 case "DeleteEntity":
                     ObservableCollection<DERModel> tempDER = MainWindowViewModel.DERs;
                     List<DERModel> selectedDERs = new List<DERModel>();
+                    SaveDeleteState();
                     foreach (var der in tempDER)
                     {
                         if(der.IsSelected)
@@ -189,7 +191,7 @@ namespace NetworkService.ViewModel
                     }
                     foreach (var der in selectedDERs)
                     {
-                        DERs.Remove(der);
+                        DERModels.Remove(der);
                         tempDER.Remove(der);
                     }
                     if (selectedDERs.Count > 0)
@@ -206,6 +208,23 @@ namespace NetworkService.ViewModel
                     break;
             }
         }
+
+
+        #region Undo
+        private void SaveDeleteState()
+        {
+            MainWindowViewModel.UndoStack.Push(new SaveState<CommandType, object>
+                (CommandType.EntityManipulation,
+                new ObservableCollection<DERModel>(DERModels)));
+        }
+
+        private void SaveAddState()
+        {
+            MainWindowViewModel.UndoStack.Push(new SaveState<CommandType, object>
+                (CommandType.SwitchViews, this.GetType()));
+        }
+
+        #endregion
 
         private void TextBoxGotFocus(object obj)
         {

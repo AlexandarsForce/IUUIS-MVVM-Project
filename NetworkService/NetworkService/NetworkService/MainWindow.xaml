@@ -113,8 +113,7 @@
                 <Button
                     Grid.Row="0"
                     Grid.Column="3"
-                    Command="{Binding NavCommand}"
-                    CommandParameter="Undo"
+                    Command="{Binding UndoCommand}"
                     Style="{StaticResource MenuButtonStyle}">
                     <Image 
                     Source="/Assets/Icons/undo_icon.png" 

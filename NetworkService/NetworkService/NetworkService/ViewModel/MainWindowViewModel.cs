@@ -1,5 +1,6 @@
 ﻿using NetworkService.Helpers;
 using NetworkService.Model;
+using NetworkService.Views;
 using Notification.Wpf;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 
 namespace NetworkService.ViewModel
 {
@@ -29,7 +31,9 @@ namespace NetworkService.ViewModel
         public MyICommand<string> InputNumberCommand { get; set; }
         public MyICommand HideKeyboardCommand { get; set; }
         public MyICommand BackspaceCommand { get; set; }
+        public MyICommand UndoCommand { get; set; }
         public static ObservableCollection<DERModel> DERs { get; set; }
+        public static Stack<SaveState<CommandType, object>> UndoStack { get; set; }
 
         public NetworkEntitiesViewModel networkEntitiesViewModel;
         public NetworkDisplayViewModel networkDisplayViewModel;
@@ -50,13 +54,16 @@ namespace NetworkService.ViewModel
             createListener(); //Povezivanje sa serverskom aplikacijom
 
             Instance = this;
-            
+
+            UndoStack = new Stack<SaveState<CommandType, object>>();
+
             NavCommand = new MyICommand<string>(OnNav);
             CloseWindowCommand = new MyICommand<Window>(CloseWindow);
             InputKeyCommand = new MyICommand<string>(InputKey);
             InputNumberCommand = new MyICommand<string>(InputNumber);
             BackspaceCommand = new MyICommand(Backspace);
             HideKeyboardCommand = new MyICommand(HideKeyboard);
+            UndoCommand = new MyICommand(OnUndo);
 
             DERs = new ObservableCollection<DERModel>
             {
@@ -71,7 +78,7 @@ namespace NetworkService.ViewModel
             networkDisplayViewModel = new NetworkDisplayViewModel();
             measurementGraphViewModel = new MeasurementGraphViewModel();
             addEntityViewModel = new AddEntityViewModel();
-            currentViewModel = networkEntitiesViewModel;
+            CurrentViewModel = networkEntitiesViewModel;
 
             KeyboardVisibility = Visibility.Hidden;
             IsKeyboardEnabled = false;
@@ -90,6 +97,7 @@ namespace NetworkService.ViewModel
 
         private void OnNav(string destination)
         {
+            UndoStack.Push(new SaveState<CommandType, object>(CommandType.SwitchViews, CurrentViewModel.GetType()));
             switch (destination)
             {
                 case "NetworkEntities":
@@ -103,6 +111,69 @@ namespace NetworkService.ViewModel
                     break;
                 default:
                     break;
+            }
+        }
+
+        public void OnUndo()
+        {
+            if (UndoStack.Count > 0)
+            {
+                SaveState<CommandType, object> saveState = UndoStack.Pop();
+                if (saveState.CommandType == CommandType.SwitchViews)
+                {
+                    Type viewType = saveState.SavedState as Type;
+
+                    if (viewType == typeof(NetworkEntitiesViewModel))
+                    {
+                        CurrentViewModel = networkEntitiesViewModel;
+                    }
+                    else if (viewType == typeof(NetworkDisplayViewModel))
+                    {
+                        CurrentViewModel = networkDisplayViewModel;
+                    }
+                    else if (viewType == typeof(MeasurementGraphViewModel))
+                    {
+                        CurrentViewModel = measurementGraphViewModel;
+                    }
+                    else if (viewType == typeof(AddEntityViewModel))
+                    {
+                        CurrentViewModel = addEntityViewModel;
+                    }
+                    else
+                    {
+                        CurrentViewModel = networkEntitiesViewModel;
+                    }
+                }
+                else if (saveState.CommandType == CommandType.EntityManipulation)
+                {
+                    DERs = saveState.SavedState as ObservableCollection<DERModel>;
+                    CurrentViewModel = networkEntitiesViewModel;
+                }
+                else if (saveState.CommandType == CommandType.CanvasManipulation)
+                {
+                    NetworkDisplayViewModel.AddedToGrid.Clear();
+                    NetworkDisplayViewModel.Lines.Clear();
+
+                    List<object> state = saveState.SavedState as List<object>;
+
+                    foreach (var entry in state[0] as Dictionary<int, DERModel>)
+                    {
+                        NetworkDisplayViewModel.AddedToGrid.Add(entry.Key, entry.Value);
+                    }
+                    foreach (var entry in state[1] as Dictionary<string, Line>)
+                    {
+                        NetworkDisplayViewModel.Lines.Add(entry.Key, entry.Value);
+                    }
+
+                    NetworkDisplayViewModel.InitializeCollections();
+                    NetworkDisplayViewModel.InitializeGroups();
+
+                    CurrentViewModel = networkDisplayViewModel;
+
+                }
+
+                GC.Collect();
+                UndoCommand.RaiseCanExecuteChanged();
             }
         }
 

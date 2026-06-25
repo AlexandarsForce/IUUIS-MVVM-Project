@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CommandType = NetworkService.Model.CommandType;
 
 namespace NetworkService.ViewModel
 {
@@ -493,9 +494,8 @@ namespace NetworkService.ViewModel
             }
 
             List<object> state = new List<object>() { entityState, lineState };
-            //MainWindowViewModel.UndoStack.Push(
-             //   new SaveState<CommandType, object>(CommandType.CanvasManipulation, state));
-
+            MainWindowViewModel.UndoStack.Push(
+                new SaveState<CommandType, object>(CommandType.CanvasManipulation, state));
         }
 
         #endregion

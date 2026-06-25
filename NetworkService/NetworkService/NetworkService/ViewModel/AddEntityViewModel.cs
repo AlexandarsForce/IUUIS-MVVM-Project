@@ -3,6 +3,7 @@ using NetworkService.Model;
 using Notification.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,7 @@ namespace NetworkService.ViewModel
 
         private void OnAddEntity()
         {
+            SaveState();
             bool isValid = true;
             if(string.IsNullOrEmpty(NameTextBox.Trim()))
             {
@@ -86,6 +88,13 @@ namespace NetworkService.ViewModel
             {
                 ToastNotify.RaiseToast("Error", "Invalid entity properties, enter correct values.", NotificationType.Error);
             }
+        }
+
+        private void SaveState()
+        {
+            MainWindowViewModel.UndoStack.Push(new SaveState<CommandType, object>
+                (CommandType.EntityManipulation,
+                new ObservableCollection<DERModel>(MainWindowViewModel.DERs)));
         }
 
         private void TextBoxGotFocus(object obj)
