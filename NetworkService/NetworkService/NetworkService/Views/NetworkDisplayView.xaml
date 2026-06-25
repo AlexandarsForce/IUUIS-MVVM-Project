@@ -37,7 +37,7 @@
             FontWeight="Bold"
             FontSize="20"
             Margin="0"
-            Foreground="Black"/>
+            Foreground="Orange"/>
 
 
         <ScrollViewer
@@ -64,12 +64,12 @@
                 Grid.Row="0"
                 Foreground="White"
                 FontSize="15"
-                Content="SOLAR PANEL"
+                Content="▼ SOLAR PANEL"
                 Margin="20,0,10,0"/>
                 <ListView
                 x:Name="ListView1"
                 Grid.Row="1"
-                Margin="20,0,10,0"
+                Margin="50,0,10,0"
                 ItemsSource="{Binding DERGroups[0].DERModels}"
                 d:ItemsSource="{d:SampleData ItemCount=2}"
                 SelectedItem="{Binding Path=SelectedDER, Mode=TwoWay}">
@@ -110,12 +110,12 @@
                 Grid.Row="2"
                 Foreground="White"
                 FontSize="15"
-                Content="WIND TURBINE"
+                Content="▼ WIND TURBINE"
                 Margin="20,0,10,0"/>
                 <ListView
                 x:Name="ListView2"
                 Grid.Row="3"
-                Margin="20,0,10,0"
+                Margin="50,0,10,0"
                 ItemsSource="{Binding DERGroups[1].DERModels}"
                 d:ItemsSource="{d:SampleData ItemCount=2}"
                 SelectedItem="{Binding Path=SelectedDER, Mode=TwoWay}">

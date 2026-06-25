@@ -56,6 +56,15 @@ namespace NetworkService.ViewModel
             TextBoxLostFocusCommand = new MyICommand<object>(TextBoxLostFocus);
         }
 
+        public void ResetFields()
+        {
+            DERModels = MainWindowViewModel.DERs;
+            foreach(DERModel d in DERModels)
+            {
+                d.IsSelected = false;
+            }
+        }
+
         private void OnFilter(string filterOption)
         {
             DERModels = MainWindowViewModel.DERs;
@@ -171,7 +180,7 @@ namespace NetworkService.ViewModel
             switch (entityOption)
             {
                 case "AddEntity":
-                    SaveAddState();
+                    SaveAddStatus();
                     if (MainWindowViewModel.Instance != null)
                     {
                         MainWindowViewModel.Instance.addEntityViewModel.ResetFields();
@@ -181,7 +190,7 @@ namespace NetworkService.ViewModel
                 case "DeleteEntity":
                     ObservableCollection<DERModel> tempDER = MainWindowViewModel.DERs;
                     List<DERModel> selectedDERs = new List<DERModel>();
-                    SaveDeleteState();
+                    SaveDeleteStatus();
                     foreach (var der in tempDER)
                     {
                         if(der.IsSelected)
@@ -193,6 +202,23 @@ namespace NetworkService.ViewModel
                     {
                         DERModels.Remove(der);
                         tempDER.Remove(der);
+                        if (NetworkDisplayViewModel.AddedToGrid != null)
+                        {
+                            var removedKey = NetworkDisplayViewModel.AddedToGrid.FirstOrDefault(
+                            x => EqualityComparer<DERModel>.Default.Equals(x.Value, der)).Key;
+
+                            if (!EqualityComparer<int>.Default.Equals(removedKey, default))
+                            {
+                                NetworkDisplayViewModel.AddedToGrid.Remove(removedKey);
+                                List<int> connections = NetworkDisplayViewModel.FindAllConnections(removedKey);
+                                foreach (int connectedTo in connections)
+                                {
+                                    int source = Math.Min(removedKey, connectedTo);
+                                    int destination = Math.Max(removedKey, connectedTo);
+                                    NetworkDisplayViewModel.DeleteLine(source, destination);
+                                }
+                            }
+                        }
                     }
                     if (selectedDERs.Count > 0)
                     {
@@ -211,17 +237,17 @@ namespace NetworkService.ViewModel
 
 
         #region Undo
-        private void SaveDeleteState()
+        private void SaveDeleteStatus()
         {
-            MainWindowViewModel.UndoStack.Push(new SaveState<CommandType, object>
-                (CommandType.EntityManipulation,
+            MainWindowViewModel.UndoStack.Push(new SaveValue<CommandType, object>
+                (CommandType.ENTITY_CHANGE,
                 new ObservableCollection<DERModel>(DERModels)));
         }
 
-        private void SaveAddState()
+        private void SaveAddStatus()
         {
-            MainWindowViewModel.UndoStack.Push(new SaveState<CommandType, object>
-                (CommandType.SwitchViews, this.GetType()));
+            MainWindowViewModel.UndoStack.Push(new SaveValue<CommandType, object>
+                (CommandType.VIEW_CHANGE, this.GetType()));
         }
 
         #endregion

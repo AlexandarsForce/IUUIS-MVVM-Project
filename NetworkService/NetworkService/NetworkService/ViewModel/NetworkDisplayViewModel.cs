@@ -22,37 +22,22 @@ namespace NetworkService.ViewModel
     public class NetworkDisplayViewModel : BindableBase
     {
 
-        #region Properties
-
-        private DERModel selectedDER;
-        public DERModel SelectedDER
-        {
-            get => selectedDER;
-            set
-            {
-                SetProperty(ref selectedDER, value);
-            }
-        }
-
-        //dragging item info
         private DERModel draggedItem = null;
         private bool dragging = false;
         public int draggingSourceIndex = -1;
 
+        private DERModel selectedDER;
+        public DERModel SelectedDER { get => selectedDER;set { SetProperty(ref selectedDER, value); } }
+
         public static ObservableCollection<DERModel> DERModels { get; set; }
         public static ObservableCollection<DERGroup> DERGroups { get; set; }
         public static Dictionary<int, DERModel> AddedToGrid { get; set; } = new Dictionary<int, DERModel>();
-
         public static Dictionary<string, Line> Lines { get; set; } = new Dictionary<string, Line>();
         public ObservableCollection<Line> LinesToDisplay { get; set; }
-
         public static ObservableCollection<Canvas> CanvasCollection { get; set; } = new ObservableCollection<Canvas>();
         public static ObservableCollection<DERModel> DERInfo { get; set; } = new ObservableCollection<DERModel>();
         public static ObservableCollection<Brush> BorderBrushCollection { get; set; } = new ObservableCollection<Brush>();
 
-        #endregion
-
-        #region Commands
 
         public MyICommand<string> DropDEROnCanvasCommand { get; set; }
         public MyICommand<string> MouseLeftButtonDownCommand { get; set; }
@@ -62,9 +47,6 @@ namespace NetworkService.ViewModel
         public MyICommand<string> ClearCanvasCommand { get; set; }
 
 
-        #endregion
-
-        #region Initialization
         public NetworkDisplayViewModel()
         {
             LinesToDisplay = new ObservableCollection<Line>();
@@ -79,8 +61,6 @@ namespace NetworkService.ViewModel
             FreeCanvas = new MyICommand<string>(ResetCanvas);
             SelectionChangedCommand = new MyICommand<object>(OnSelectionChanged);
             ClearCanvasCommand = new MyICommand<string>(ResetCanvas);
-
-
         }
 
         public static void InitializeCollections()
@@ -174,9 +154,7 @@ namespace NetworkService.ViewModel
             }
         }
 
-        #endregion
 
-        #region Line Drawing
         public void DrawExistingLines()
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -199,10 +177,6 @@ namespace NetworkService.ViewModel
             });
 
         }
-
-        #endregion
-
-        #region Line Methods
         private Line CreateNewLine(int sourceIndex, int destinationIndex)
         {
             Line newLine = new Line
@@ -263,10 +237,7 @@ namespace NetworkService.ViewModel
                 return sourceIndex == index1 && destinationIndex == index2;
             }) ? 1 : 0;
         }
-
-        #endregion
-
-        #region Drag and Drop
+        
 
         private void OnLeftMouseButtonUp()
         {
@@ -318,7 +289,7 @@ namespace NetworkService.ViewModel
 
             if (draggedItem != null && !CanvasCollection[index].Resources.Contains("taken"))
             {
-                SaveState();
+                SaveStatus();
                 string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, draggedItem.Type.ImagePath);
                 var logo = new BitmapImage(new Uri(filePath, UriKind.Relative));
                 CanvasCollection[index].Background = new ImageBrush(logo);
@@ -363,7 +334,7 @@ namespace NetworkService.ViewModel
             {
                 if (IsLineAlreadyDrawn(draggingSourceIndex, index) == 0)
                 {
-                    SaveState();
+                    SaveStatus();
 
                     int source = Math.Min(draggingSourceIndex, index);
                     int destination = Math.Max(draggingSourceIndex, index);
@@ -392,7 +363,7 @@ namespace NetworkService.ViewModel
             }
             if (draggingSourceIndex == -1)
             {
-                SaveState();
+                SaveStatus();
 
                 List<int> connections = FindAllConnections(index);
 
@@ -423,9 +394,7 @@ namespace NetworkService.ViewModel
 
         }
 
-        #endregion
 
-        #region Groups
         private void AddToGroup(DERModel derModel)
         {
             foreach (DERGroup d in DERGroups)
@@ -437,7 +406,6 @@ namespace NetworkService.ViewModel
                 }
             }
         }
-
         private static void RemoveFromGroup(DERModel derModel)
         {
             foreach (var group in DERGroups)
@@ -450,9 +418,7 @@ namespace NetworkService.ViewModel
             }
         }
 
-        #endregion
 
-        #region UI Updates
         public static void UpdateEntitiesOnCanvas()
         {
             if (CanvasCollection != null)
@@ -475,11 +441,8 @@ namespace NetworkService.ViewModel
             }
         }
 
-        #endregion
 
-        #region Undo
-
-        public static void SaveState()
+        public static void SaveStatus()
         {
 
             Dictionary<int, DERModel> entityState = new Dictionary<int, DERModel>();
@@ -495,9 +458,8 @@ namespace NetworkService.ViewModel
 
             List<object> state = new List<object>() { entityState, lineState };
             MainWindowViewModel.UndoStack.Push(
-                new SaveState<CommandType, object>(CommandType.CanvasManipulation, state));
+                new SaveValue<CommandType, object>(CommandType.DISPLAY_CHANGE, state));
         }
 
-        #endregion
     }
 }

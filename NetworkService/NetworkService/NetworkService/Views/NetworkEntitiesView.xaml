@@ -37,7 +37,7 @@
             FontWeight="Bold"
             FontSize="20"
             Margin="0"
-            Foreground="Black"/>
+            Foreground="Orange"/>
 
         <StackPanel
             Orientation="Horizontal"

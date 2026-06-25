@@ -81,8 +81,8 @@
     <Compile Include="Model\DERModel.cs" />
     <Compile Include="Model\DERModelType.cs" />
     <Compile Include="Model\DERGroup.cs" />
-    <Compile Include="Model\Pair.cs" />
-    <Compile Include="Model\SaveState.cs" />
+    <Compile Include="Model\MeteringValue.cs" />
+    <Compile Include="Model\SaveValue.cs" />
     <Compile Include="ViewModel\AddEntityViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MeasurementGraphViewModel.cs" />

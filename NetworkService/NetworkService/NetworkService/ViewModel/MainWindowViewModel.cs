@@ -33,7 +33,7 @@ namespace NetworkService.ViewModel
         public MyICommand BackspaceCommand { get; set; }
         public MyICommand UndoCommand { get; set; }
         public static ObservableCollection<DERModel> DERs { get; set; }
-        public static Stack<SaveState<CommandType, object>> UndoStack { get; set; }
+        public static Stack<SaveValue<CommandType, object>> UndoStack { get; set; }
 
         public NetworkEntitiesViewModel networkEntitiesViewModel;
         public NetworkDisplayViewModel networkDisplayViewModel;
@@ -55,7 +55,7 @@ namespace NetworkService.ViewModel
 
             Instance = this;
 
-            UndoStack = new Stack<SaveState<CommandType, object>>();
+            UndoStack = new Stack<SaveValue<CommandType, object>>();
 
             NavCommand = new MyICommand<string>(OnNav);
             CloseWindowCommand = new MyICommand<Window>(CloseWindow);
@@ -97,10 +97,11 @@ namespace NetworkService.ViewModel
 
         private void OnNav(string destination)
         {
-            UndoStack.Push(new SaveState<CommandType, object>(CommandType.SwitchViews, CurrentViewModel.GetType()));
+            UndoStack.Push(new SaveValue<CommandType, object>(CommandType.VIEW_CHANGE, CurrentViewModel.GetType()));
             switch (destination)
             {
                 case "NetworkEntities":
+                    networkEntitiesViewModel.ResetFields();
                     CurrentViewModel = networkEntitiesViewModel;
                     break;
                 case "NetworkDisplay":
@@ -118,8 +119,8 @@ namespace NetworkService.ViewModel
         {
             if (UndoStack.Count > 0)
             {
-                SaveState<CommandType, object> saveState = UndoStack.Pop();
-                if (saveState.CommandType == CommandType.SwitchViews)
+                SaveValue<CommandType, object> saveState = UndoStack.Pop();
+                if (saveState.CommandType == CommandType.VIEW_CHANGE)
                 {
                     Type viewType = saveState.SavedState as Type;
 
@@ -144,12 +145,12 @@ namespace NetworkService.ViewModel
                         CurrentViewModel = networkEntitiesViewModel;
                     }
                 }
-                else if (saveState.CommandType == CommandType.EntityManipulation)
+                else if (saveState.CommandType == CommandType.ENTITY_CHANGE)
                 {
                     DERs = saveState.SavedState as ObservableCollection<DERModel>;
                     CurrentViewModel = networkEntitiesViewModel;
                 }
-                else if (saveState.CommandType == CommandType.CanvasManipulation)
+                else if (saveState.CommandType == CommandType.DISPLAY_CHANGE)
                 {
                     NetworkDisplayViewModel.AddedToGrid.Clear();
                     NetworkDisplayViewModel.Lines.Clear();
@@ -292,18 +293,16 @@ namespace NetworkService.ViewModel
             listeningThread.IsBackground = true;
             listeningThread.Start();
         }
-
-
         private void AddValueToList(DERModel derModel)
         {
             if (derModel.LastPowers.Count == 5)
             {
                 derModel.LastPowers.RemoveAt(0);
-                derModel.LastPowers.Add(new Pair<DateTime, int>(DateTime.Now, derModel.Power));
+                derModel.LastPowers.Add(new MeteringValue<DateTime, int>(DateTime.Now, derModel.Power));
             }
             else
             {
-                derModel.LastPowers.Add(new Pair<DateTime, int>(DateTime.Now, derModel.Power));
+                derModel.LastPowers.Add(new MeteringValue<DateTime, int>(DateTime.Now, derModel.Power));
             }
         }
 

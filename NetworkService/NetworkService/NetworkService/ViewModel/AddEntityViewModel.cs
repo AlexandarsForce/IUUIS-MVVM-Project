@@ -51,7 +51,7 @@ namespace NetworkService.ViewModel
 
         private void OnAddEntity()
         {
-            SaveState();
+            SaveStatus();
             bool isValid = true;
             if(string.IsNullOrEmpty(NameTextBox.Trim()))
             {
@@ -90,10 +90,10 @@ namespace NetworkService.ViewModel
             }
         }
 
-        private void SaveState()
+        private void SaveStatus()
         {
-            MainWindowViewModel.UndoStack.Push(new SaveState<CommandType, object>
-                (CommandType.EntityManipulation,
+            MainWindowViewModel.UndoStack.Push(new SaveValue<CommandType, object>
+                (CommandType.ENTITY_CHANGE,
                 new ObservableCollection<DERModel>(MainWindowViewModel.DERs)));
         }
 
