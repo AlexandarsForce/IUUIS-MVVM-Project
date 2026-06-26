@@ -74,6 +74,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\BindableBase.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\MyICommand.cs" />
     <Compile Include="Helpers\ToastNotify.cs" />
     <Compile Include="Helpers\ValidationBase.cs" />

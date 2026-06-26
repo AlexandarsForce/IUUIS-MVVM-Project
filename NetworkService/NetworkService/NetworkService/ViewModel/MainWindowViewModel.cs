@@ -255,11 +255,7 @@ namespace NetworkService.ViewModel
                             Byte[] data = System.Text.Encoding.ASCII.GetBytes(DERs.Count.ToString());
                             stream.Write(data, 0, data.Length);
 
-                            if (File.Exists("Log.txt"))
-                            {
-                                File.WriteAllText("Log.txt", String.Empty);
-                            }
-                            else
+                            if (!File.Exists("Log.txt"))
                             {
                                 File.Create("Log.txt");
                             }
@@ -272,19 +268,22 @@ namespace NetworkService.ViewModel
                             //################ IMPLEMENTACIJA ####################
                             // Obraditi poruku kako bi se dobile informacije o izmeni
                             // Azuriranje potrebnih stvari u aplikaciji
+
+                            var splited = incomming.Split(':');
+                            DateTime dt = DateTime.Now;
+                            Logger.AppendLog("Log.txt", dt + "; " + splited[0] + ", " + splited[1]);
+
                             if (DERs.Count > 0)
                             {
-                                var splited = incomming.Split(':');
-                                DateTime dt = DateTime.Now;
-                                using (StreamWriter sw = File.AppendText("Log.txt"))
-                                    sw.WriteLine(dt + "; " + splited[0] + ", " + splited[1]);
-
                                 int id = Int32.Parse(splited[0].Split('_')[1]);
                                 try
                                 {
-                                    DERs[id].Power = Int32.Parse(splited[1]);
-                                    AddValueToList(DERs[id]);
-                                    NetworkDisplayViewModel.UpdateEntitiesOnCanvas();
+                                    if (id < DERs.Count - 1)
+                                    {
+                                        DERs[id].Power = Int32.Parse(splited[1]);
+                                        AddValueToList(DERs[id]);
+                                        NetworkDisplayViewModel.UpdateEntitiesOnCanvas();
+                                    }
                                 } catch { }
                             }
                             
