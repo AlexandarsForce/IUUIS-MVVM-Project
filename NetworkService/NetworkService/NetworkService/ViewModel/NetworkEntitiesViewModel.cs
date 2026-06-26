@@ -28,7 +28,7 @@ namespace NetworkService.ViewModel
         private string filterIDTextBox = string.Empty;
         private DERType? filterTypeComboBox = null;
         private bool? lessThanRadioButton = false;
-        private bool? equalToRadioButton = false;
+        private bool? equalToRadioButton = true;
         private bool? greaterThanRadioButton = false;
 
         public ObservableCollection<DERModel> DERModels { get { return derModels; } set { derModels = value; OnPropertyChanged("DERModels"); } }
@@ -56,10 +56,20 @@ namespace NetworkService.ViewModel
             TextBoxLostFocusCommand = new MyICommand<object>(TextBoxLostFocus);
         }
 
-        public void ResetFields()
+        public void ResetFilter()
+        {
+            FilterIDTextBox = string.Empty;
+            FilterTypeComboBox = null;
+            LessThanRadioButton = false;
+            EqualToRadioButton = true;
+            GreaterThanRadioButton = false;
+
+        }
+
+        public void ResetSelection()
         {
             DERModels = MainWindowViewModel.DERs;
-            foreach(DERModel d in DERModels)
+            foreach (DERModel d in DERModels)
             {
                 d.IsSelected = false;
             }
@@ -108,6 +118,10 @@ namespace NetworkService.ViewModel
                                     }
                                 }
                             }
+                            else
+                            {
+                                filteredDERs = DERModels;
+                            }
                         }
                         else
                         {
@@ -141,6 +155,10 @@ namespace NetworkService.ViewModel
                                     }
                                 }
                             }
+                            else
+                            {
+                                filteredDERs = DERModels;
+                            }
                         }
                     }
                     else
@@ -164,11 +182,7 @@ namespace NetworkService.ViewModel
                     break;
 
                 case "ResetFilter":
-                    FilterIDTextBox = string.Empty;
-                    FilterTypeComboBox = null;
-                    LessThanRadioButton = false;
-                    EqualToRadioButton = false;
-                    GreaterThanRadioButton = false;
+                    ResetFilter();
                     break;
                 default:
                     break;

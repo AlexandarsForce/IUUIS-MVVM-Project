@@ -101,7 +101,7 @@ namespace NetworkService.ViewModel
             switch (destination)
             {
                 case "NetworkEntities":
-                    networkEntitiesViewModel.ResetFields();
+                    networkEntitiesViewModel.ResetSelection();
                     CurrentViewModel = networkEntitiesViewModel;
                     break;
                 case "NetworkDisplay":
