@@ -55,6 +55,7 @@
             FontFamily="Century Gothic"
             FontSize="16"
             FontWeight="Bold"
+            ToolTip="Select entity to graph its values"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
             HorizontalAlignment="Right">

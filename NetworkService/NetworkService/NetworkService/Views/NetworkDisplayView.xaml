@@ -81,14 +81,16 @@
                                 <Image 
                                 Source="{Binding Type.ImagePath}"
                                 Width="30"
-                                Height="30"/>
+                                Height="30"
+                                ToolTip="Drag and drop onto the canvas"/>
                                 <TextBlock
                                 Style="{StaticResource DefaultTextBlockStyle}"
                                 Text="{Binding Name}" 
                                 VerticalAlignment="Center" 
                                 FontSize="12"
                                 FontWeight="Bold"
-                                Foreground="Black"/>
+                                Foreground="Black"
+                                ToolTip="Drag and drop onto the canvas"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -127,14 +129,16 @@
                                 <Image 
                                 Source="{Binding Type.ImagePath}"
                                 Width="30"
-                                Height="30"/>
+                                Height="30"
+                                ToolTip="Drag and drop onto the canvas"/>
                                 <TextBlock
                                 Style="{StaticResource DefaultTextBlockStyle}"
                                 Text="{Binding Name}" 
                                 VerticalAlignment="Center" 
                                 FontSize="12"
                                 FontWeight="Bold"
-                                Foreground="Black"/>
+                                Foreground="Black"
+                                ToolTip="Drag and drop onto the canvas"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -213,6 +217,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -225,7 +230,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="0"
                 Width="20"
@@ -271,6 +276,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -283,7 +289,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="1"
                 Width="20"
@@ -329,6 +335,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -341,7 +348,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="2"
                 Width="20"
@@ -387,6 +394,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -399,7 +407,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="3"
                 Width="20"
@@ -445,6 +453,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -457,7 +466,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="4"
                 Width="20"
@@ -503,6 +512,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -515,7 +525,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="5"
                 Width="20"
@@ -561,6 +571,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -573,7 +584,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="6"
                 Width="20"
@@ -619,6 +630,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                 ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -631,7 +643,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="7"
                 Width="20"
@@ -677,6 +689,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -689,7 +702,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="8"
                 Width="20"
@@ -734,6 +747,7 @@
                 Width="90"
                 Height="20"
                 FontSize="15"
+                ToolTip="Entity ID and value"
                 FontWeight="Bold"
                 Background="#D9D9D9"
                 Foreground="Black">
@@ -747,7 +761,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="9"
                 Width="20"
@@ -792,6 +806,7 @@
                 Width="90"
                 Height="20"
                 FontSize="15"
+                ToolTip="Entity ID and value"
                 FontWeight="Bold"
                 Background="#D9D9D9"
                 Foreground="Black">
@@ -805,7 +820,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="10"
                 Width="20"
@@ -852,6 +867,7 @@
                 Height="20"
                 FontSize="15"
                 FontWeight="Bold"
+                ToolTip="Entity ID and value"
                 Background="#D9D9D9"
                 Foreground="Black">
                     <TextBlock.Text>
@@ -864,7 +880,7 @@
                 <Button
                 Style="{StaticResource DisplayButtonStyle}"
                 Cursor="Hand"
-                ToolTip="Remove Item From Grid"
+                ToolTip="Remove entity from this field"
                 Command="{Binding ClearCanvasCommand}"
                 CommandParameter="11"
                 Width="20"

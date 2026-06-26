@@ -175,6 +175,7 @@ namespace NetworkService.ViewModel
                         }
                         else
                         {
+                            ToastNotify.RaiseToast("Warning", "Select filter options to proceed with filtration.", NotificationType.Warning);
                             filteredDERs = DERModels;
                         }
                     }

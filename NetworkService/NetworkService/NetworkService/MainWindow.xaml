@@ -79,6 +79,7 @@
                     Grid.Column="0"
                     Command="{Binding NavCommand}"
                     CommandParameter="NetworkEntities"
+                    ToolTip="Network Entities"
                     Style="{StaticResource MenuButtonStyle}">
                     <Image 
                         Source="/Assets/Icons/home_icon.png" 
@@ -89,6 +90,7 @@
                 <Button
                     Grid.Row="0"
                     Grid.Column="1"
+                    ToolTip="Network Display"
                     Command="{Binding NavCommand}"
                     CommandParameter="NetworkDisplay"
                     Style="{StaticResource MenuButtonStyle}">
@@ -102,6 +104,7 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     Command="{Binding NavCommand}"
+                    ToolTip="Measurement Graph"
                     CommandParameter="MeasurementGraph"
                     Style="{StaticResource MenuButtonStyle}">
                     <Image 
@@ -113,6 +116,7 @@
                 <Button
                     Grid.Row="0"
                     Grid.Column="3"
+                    ToolTip="Undo"
                     Command="{Binding UndoCommand}"
                     Style="{StaticResource MenuButtonStyle}">
                     <Image 

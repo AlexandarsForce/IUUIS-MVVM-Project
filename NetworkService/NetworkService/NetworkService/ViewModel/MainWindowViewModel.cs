@@ -183,8 +183,6 @@ namespace NetworkService.ViewModel
             MainWindow.Close();
         }
 
-        #region Keyboard
-
         private void HideKeyboard()
         {
             KeyboardVisibility = Visibility.Hidden;
@@ -221,7 +219,6 @@ namespace NetworkService.ViewModel
             }
         }
 
-        #endregion
 
 
         private void createListener()
