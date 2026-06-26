@@ -62,13 +62,14 @@ namespace NetworkService.Model
 
         public DERModel() { Id = totalId++; }
 
-        public DERModel(string name, DERModelType type)
+        public DERModel(int id, string name, DERModelType type)
         {
-            lastPowers = new List<MeteringValue<DateTime, int>>();
-            Id = totalId++;
+            Id = id;
             Name = name;
             Type = type;
             State = DERState.LOW;
+            lastPowers = new List<MeteringValue<DateTime, int>>();
+            totalId++;
         }
 
         protected override void ValidateSelf()

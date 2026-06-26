@@ -67,12 +67,12 @@ namespace NetworkService.ViewModel
 
             DERs = new ObservableCollection<DERModel>
             {
-                new DERModel("Entity_0", new DERModelType(DERType.SOLAR_PANEL)),
-                new DERModel("Entity_1", new DERModelType(DERType.WIND_TURBINE)),
-                new DERModel("Entity_2", new DERModelType(DERType.WIND_TURBINE)),
-                new DERModel("Entity_3", new DERModelType(DERType.SOLAR_PANEL)),
-                new DERModel("Entity_4", new DERModelType(DERType.SOLAR_PANEL)),
-                new DERModel("Entity_5", new DERModelType(DERType.WIND_TURBINE)),
+                new DERModel(0,"Entity_0", new DERModelType(DERType.SOLAR_PANEL)),
+                new DERModel(1,"Entity_1", new DERModelType(DERType.WIND_TURBINE)),
+                new DERModel(2,"Entity_2", new DERModelType(DERType.WIND_TURBINE)),
+                new DERModel(3,"Entity_3", new DERModelType(DERType.SOLAR_PANEL)),
+                new DERModel(4,"Entity_4", new DERModelType(DERType.SOLAR_PANEL)),
+                new DERModel(5,"Entity_5", new DERModelType(DERType.WIND_TURBINE)),
             };
             networkEntitiesViewModel = new NetworkEntitiesViewModel();
             networkDisplayViewModel = new NetworkDisplayViewModel();
@@ -280,9 +280,12 @@ namespace NetworkService.ViewModel
                                     sw.WriteLine(dt + "; " + splited[0] + ", " + splited[1]);
 
                                 int id = Int32.Parse(splited[0].Split('_')[1]);
-                                DERs[id].Power = Int32.Parse(splited[1]);
-                                AddValueToList(DERs[id]);
-                                NetworkDisplayViewModel.UpdateEntitiesOnCanvas();
+                                try
+                                {
+                                    DERs[id].Power = Int32.Parse(splited[1]);
+                                    AddValueToList(DERs[id]);
+                                    NetworkDisplayViewModel.UpdateEntitiesOnCanvas();
+                                } catch { }
                             }
                             
                         }

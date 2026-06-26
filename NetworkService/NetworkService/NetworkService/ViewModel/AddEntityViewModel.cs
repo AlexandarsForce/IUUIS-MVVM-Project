@@ -19,15 +19,23 @@ namespace NetworkService.ViewModel
         public MyICommand<object> TextBoxGotFocusCommand { get; set; }
         public MyICommand<object> TextBoxLostFocusCommand { get; set; }
 
+        private string idTextBox = string.Empty;
         private string nameTextBox = string.Empty;
+        private string idErrorLabelText = string.Empty;
         private DERType? typeComboBox = null;
+        private Visibility idErrorLabel = Visibility.Hidden;
+        private Visibility idErrorBorder = Visibility.Hidden;
         private Visibility nameErrorLabel = Visibility.Hidden;
         private Visibility nameErrorBorder = Visibility.Hidden;
         private Visibility typeErrorLabel = Visibility.Hidden;
         private Visibility typeErrorBorder = Visibility.Hidden;
 
+        public string IDTextBox { get { return idTextBox; } set { idTextBox = value; OnPropertyChanged("IDTextBox"); } }
         public string NameTextBox { get { return nameTextBox; } set { nameTextBox = value; OnPropertyChanged("NameTextBox"); } }
+        public string IDErrorLabelText { get { return idErrorLabelText; } set { idErrorLabelText = value; OnPropertyChanged("IDErrorLabelText"); } }
         public DERType? TypeComboBox { get { return typeComboBox; } set { typeComboBox = value; OnPropertyChanged("TypeComboBox"); } }
+        public Visibility IDErrorLabel { get { return idErrorLabel; } set { idErrorLabel = value; OnPropertyChanged("IDErrorLabel"); } }
+        public Visibility IDErrorBorder { get { return idErrorBorder; } set { idErrorBorder = value; OnPropertyChanged("IDErrorBorder"); } }
         public Visibility NameErrorLabel { get { return nameErrorLabel; } set { nameErrorLabel = value; OnPropertyChanged("NameErrorLabel"); } }
         public Visibility NameErrorBorder { get { return nameErrorBorder; } set { nameErrorBorder = value; OnPropertyChanged("NameErrorBorder"); } }
         public Visibility TypeErrorLabel { get { return typeErrorLabel; } set { typeErrorLabel = value; OnPropertyChanged("TypeErrorLabel"); } }
@@ -41,8 +49,11 @@ namespace NetworkService.ViewModel
 
         public void ResetFields()
         {
+            idTextBox = string.Empty;
             nameTextBox = string.Empty;
             typeComboBox = null;
+            idErrorLabel = Visibility.Hidden;
+            idErrorBorder = Visibility.Hidden;
             nameErrorLabel = Visibility.Hidden;
             nameErrorBorder = Visibility.Hidden;
             typeErrorLabel = Visibility.Hidden;
@@ -53,7 +64,50 @@ namespace NetworkService.ViewModel
         {
             SaveStatus();
             bool isValid = true;
-            if(string.IsNullOrEmpty(NameTextBox.Trim()))
+            int newId = -1;
+
+            if (string.IsNullOrEmpty(IDTextBox.Trim()))
+            {
+                IDErrorLabelText = "Invalid - enter number";
+                IDErrorBorder = Visibility.Visible;
+                IDErrorLabel = Visibility.Visible;
+                isValid = false;
+            }
+            else
+            {
+                if (int.TryParse(IDTextBox.Trim(), out newId))
+                {
+                    foreach (DERModel d in MainWindowViewModel.DERs)
+                    {
+                        if (d.Id == newId)
+                        {
+                            newId = -1;
+                            break;
+                        }
+                    }
+                    if (newId == -1)
+                    {
+                        IDErrorLabelText = "Invalid - ID already used";
+                        IDErrorBorder = Visibility.Visible;
+                        IDErrorLabel = Visibility.Visible;
+                        isValid = false;
+                    }
+                    else
+                    {
+                        IDErrorBorder = Visibility.Hidden;
+                        IDErrorLabel = Visibility.Hidden;
+                    }
+                }
+                else
+                {
+                    IDErrorLabelText = "Invalid - enter number";
+                    IDErrorBorder = Visibility.Visible;
+                    IDErrorLabel = Visibility.Visible;
+                    isValid = false;
+                }
+            }
+
+            if (string.IsNullOrEmpty(NameTextBox.Trim()))
             {
                 NameErrorBorder = Visibility.Visible;
                 NameErrorLabel = Visibility.Visible;
@@ -79,7 +133,7 @@ namespace NetworkService.ViewModel
             
             if (isValid)
             {
-                DERModel newDER = new DERModel(NameTextBox,new DERModelType((DERType)TypeComboBox));
+                DERModel newDER = new DERModel(newId,NameTextBox,new DERModelType((DERType)TypeComboBox));
                 MainWindowViewModel.DERs.Add(newDER);
                 ToastNotify.RaiseToast("Success", "Successfully added new entity.", NotificationType.Success);
                 MainWindowViewModel.Instance.CurrentViewModel = MainWindowViewModel.Instance.networkEntitiesViewModel;
